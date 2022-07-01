@@ -12,6 +12,12 @@ a {
   text-decoration: none;
 }
 
+li, ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
 button {
   cursor: pointer;
 }
@@ -19,11 +25,13 @@ button {
 :root {
   // Color
   --color-heading: #FCFCFC;
+  --color-heading-1: #001e2b;
   --color-paragraph: #D6D6D6;
   --color-border: #383838;
   --color-bg-1: #001E2B;
   --color-bg-2: #023430;
   --color-bg-3: #00684A;
+  --color-bg-4: #00ed64;
   --color-surface-1: #3a4750;
   --color-surface-2: #f6c90e;
   --color-surface-3: #eeeeee;

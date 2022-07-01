@@ -1,8 +1,23 @@
 .navbarMain {
-  display: flex;
-  flex-direction: column;
-  background-color: var(--color-bg-2);
+  font-size: 18px;
+  font-weight: 600;
   color: var(--color-paragraph);
+  width: 100%;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+  background-color: var(--color-bg-2);
+  border-radius: 16px;
+  text-align: center;
+}
+
+.navbarList {
+  padding-top: 16px;
+}
+
+.navbarListItem {
+  min-height: 50px;
+  padding: 10px;
 }
 
 .navItem {

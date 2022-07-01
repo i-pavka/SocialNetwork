@@ -1,9 +1,8 @@
 import React from 'react';
 import s from './Header.module.scss';
 import {ReactComponent as DefaultAva} from '../../../assets/img/robot_ava.svg';
-import {NavLink} from "react-router-dom";
-import {PATH} from "../../../sc1-main/m1-ui/Main/routes/SelfRouterы";
 import logoIcon from '../../../assets/img/mongo.png';
+import {Button} from "../../../sc1-main/m1-ui/common/components/Button/Button";
 
 export const Header = () => {
 
@@ -20,7 +19,7 @@ export const Header = () => {
               <DefaultAva className={s.defaultAva}/>
               <span>User Name</span>
             </div>
-            <button>LogOut</button>
+            <Button>LogOut</Button>
           </div>
         </div>
       </div>

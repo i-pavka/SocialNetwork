@@ -9,7 +9,9 @@ export const Main = () => {
     <>
       <Header/>
       <div className={s.mainContainer}>
-        <Navbar/>
+        <aside>
+          <Navbar/>
+        </aside>
         <SelfRouter/>
       </div>
     </>
