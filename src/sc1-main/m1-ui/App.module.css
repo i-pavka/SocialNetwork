@@ -1,8 +1,8 @@
-.appMainBlock {
-  color: darkgray;
-  display: flex;
+.appWrapper {
   width: 100%;
-  height: 100%;
+  min-height: 100vh;
+  max-width: 1300px;
   margin: 0 auto;
+  background-color: var(--color-bg);
 }
 

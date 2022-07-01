@@ -1,34 +1,50 @@
 .headerMain {
-
-}
-
-.item {
-  align-items: center;
-  background: #EBE0E9;
-  color: #2D2E46;
-  display: flex;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  letter-spacing: 0.4px;
-  line-height: 16px;
-  padding: 5px 20px;
-  position: relative;
-  text-align: center;
-}
-
-.item.active {
-  background: #DCCCDB;
-  position: relative;
-  text-align: center;
-}
-
-.item.active::after {
-  background: #21268F;
-  bottom: 0;
-  content: '';
-  height: 3px;
-  left: 0;
-  position: absolute;
+  margin: 0 auto;
+  max-width: 1300px;
+  position: fixed;
+  top: 0;
   width: 100%;
+  padding: 5px 0;
+  background-color: var(--color-surface-3);
+
+  .container {
+    margin: 0 30px;
+
+    .headerContent {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .logoHeader {
+        display: flex;
+        align-items: center;
+      }
+
+      .userBlock {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+
+        .userAva {
+          display: flex;
+          align-items: center;
+
+        }
+      }
+
+
+    }
+  }
+}
+
+
+.defaultAva {
+  box-shadow: 0 0 10px #9f9f9f;
+  border-radius: 50%;
+  height: 50px;
+  margin-right: 10px;
+}
+
+.imgHeader {
+  width: 50px;
 }

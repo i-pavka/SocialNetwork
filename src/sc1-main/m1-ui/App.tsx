@@ -5,7 +5,7 @@ import {Main} from "./Main/Main";
 
 export const App = () => {
   return (
-    <div className={s.appMainBlock}>
+    <div className={s.appWrapper}>
       <HashRouter>
         <Main/>
       </HashRouter>
