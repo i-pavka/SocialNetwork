@@ -1,0 +1,28 @@
+.superInput {
+  font-size: 16px;
+  height: 25px;
+  margin: 5px 0;
+  padding: 5px;
+  background: #f6f6f6;
+  border: 1px solid #9f9f9f;
+  border-radius: 5px;
+}
+
+.superInput:focus {
+  background: white;
+  box-shadow: 0 0 10px #9f9f9f;
+  outline: none;
+}
+
+.errorInput {
+  border: 2px solid red;
+}
+
+.error {
+  color: red;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+  transition: background-color 600000s 0s, color 600000s 0s;
+}

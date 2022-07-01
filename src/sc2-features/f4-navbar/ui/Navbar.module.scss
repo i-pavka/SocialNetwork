@@ -1,7 +1,6 @@
 .navbarMain {
   font-size: 18px;
   font-weight: 600;
-  color: var(--color-paragraph);
   width: 100%;
   margin-top: 30px;
   margin-bottom: 20px;
@@ -21,10 +20,12 @@
 }
 
 .navItem {
-  color: var(--color-paragraph);
+  color: white;
   text-decoration: none;
 }
 
 .active {
-  color: var(--color-accent);
+  background-color: var(--color-bg-3);
+  padding: 10px;
+  border-radius: 16px;
 }

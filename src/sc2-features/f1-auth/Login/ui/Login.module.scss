@@ -1,3 +1,42 @@
 .loginMain {
-  color: chartreuse;
+  color: var(--color-heading-1);
+  text-align: center;
+}
+
+.loginBlock,
+.infoBlock {
+  display: flex;
+  flex-direction: column;
+}
+
+.loginBlock {
+  align-items: center;
+  width: 50%;
+  margin: 0 auto;
+  padding: 5px;
+  .loginData {
+    margin-top: 10px;
+    border: 1px solid green;
+    border-radius: 12px;
+    & p {
+      margin: 10px;
+    }
+  }
+}
+
+// LoginForm
+.itemInputBlock {
+  height: 60px;
+  font-size: 12px;
+  color: red;
+}
+
+.checkBox {
+  display: inline-flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.infoDiv {
+  height: 30px;
 }
