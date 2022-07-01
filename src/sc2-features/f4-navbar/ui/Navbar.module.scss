@@ -1,3 +1,15 @@
 .navbarMain {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-bg-2);
+  color: var(--color-paragraph);
+}
 
+.navItem {
+  color: var(--color-paragraph);
+  text-decoration: none;
+}
+
+.active {
+  color: var(--color-accent);
 }

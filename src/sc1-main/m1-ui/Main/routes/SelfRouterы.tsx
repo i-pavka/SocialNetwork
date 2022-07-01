@@ -1,4 +1,5 @@
 import React from 'react';
+import s from '../Main.module.scss'
 import {Navigate, Routes, Route} from "react-router-dom";
 import {Error404} from "../Error404/Error404";
 import {Profile} from "../../../../sc2-features/f2-profile/ui/Profile";
@@ -17,14 +18,13 @@ export const PATH = {
   DIALOGS: '/dialogs',
   NEWS: '/news',
   SETTINGS: '/settings',
-  // HEADER: '/header',
-  // NAVBAR: '/navbar',
+
 }
 
 
 export const SelfRouter = () => {
   return (
-    <div>
+    <main className={s.mainBlock}>
       <Routes>
         <Route path={'/'} element={<Navigate to={PATH.PROFILE}/>}/>
         <Route path={PATH.PROFILE} element={<Profile/>}/>
@@ -35,12 +35,9 @@ export const SelfRouter = () => {
         <Route path={PATH.NEWS} element={<News/>}/>
         <Route path={PATH.SETTINGS} element={<Settings/>}/>
 
-        {/*<Route path={PATH.HEADER} element={<Header/>}/>*/}
-        {/*<Route path={PATH.NAVBAR} element={<Navbar/>}/>*/}
-
         <Route path={'*'} element={<Error404/>}/>
       </Routes>
-    </div>
+    </main>
   );
 };
 

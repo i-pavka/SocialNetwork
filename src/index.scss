@@ -3,6 +3,7 @@ body {
   padding: 0;
   font-family: 'Ubuntu', sans-serif;
   font-weight: 600;
+  background-color: var(--color-bg-1);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -20,7 +21,9 @@ button {
   --color-heading: #FCFCFC;
   --color-paragraph: #D6D6D6;
   --color-border: #383838;
-  --color-bg: #001E2B;
+  --color-bg-1: #001E2B;
+  --color-bg-2: #023430;
+  --color-bg-3: #00684A;
   --color-surface-1: #3a4750;
   --color-surface-2: #f6c90e;
   --color-surface-3: #eeeeee;

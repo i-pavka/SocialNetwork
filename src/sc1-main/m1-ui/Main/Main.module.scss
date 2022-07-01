@@ -1,0 +1,10 @@
+.mainContainer {
+  display: grid;
+  grid-template-columns: 30% 70%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.mainBlock {
+  background-color: var(--color-bg-3);
+}

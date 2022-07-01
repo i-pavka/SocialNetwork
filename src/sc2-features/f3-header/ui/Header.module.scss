@@ -6,7 +6,6 @@
   width: 100%;
   padding: 5px 0;
   background-color: var(--color-surface-3);
-
   .container {
     margin: 0 30px;
 
@@ -14,24 +13,20 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-
+      padding: 5px;
       .logoHeader {
         display: flex;
         align-items: center;
       }
-
       .userBlock {
         display: flex;
         align-items: center;
         gap: 30px;
-
         .userAva {
           display: flex;
           align-items: center;
-
         }
       }
-
 
     }
   }
