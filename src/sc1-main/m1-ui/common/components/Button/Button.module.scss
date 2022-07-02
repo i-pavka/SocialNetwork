@@ -30,7 +30,7 @@
   height: 18px;
   width: 18px;
   margin: auto;
-  border: 2px solid #ECECF9;
+  border: 2px solid white;
   border-radius: 50%;
   border-left-color: transparent;
   border-right-color: transparent;
@@ -71,14 +71,12 @@
 
 @-webkit-keyframes my_spinner {
   100% {
-    -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
   }
 }
 
 @-moz-keyframes my_spinner {
   100% {
-    -moz-transform: rotate(360deg);
     transform: rotate(360deg);
   }
 }

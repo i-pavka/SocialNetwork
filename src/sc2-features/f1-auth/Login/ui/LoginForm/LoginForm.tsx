@@ -5,24 +5,29 @@ import {Button} from "../../../../../sc1-main/m1-ui/common/components/Button/But
 import {CheckBox} from "../../../../../sc1-main/m1-ui/common/components/CheckBox/CheckBox";
 import {InputText} from "../../../../../sc1-main/m1-ui/common/components/InputText/InputText";
 import {InputPassword} from "../../../../../sc1-main/m1-ui/common/components/InputPassword/InputPassword";
+import {authLoginTC} from "../../bll/authReducer";
+import {useAppDispatch, useAppSelector} from "../../../../../sc1-main/m2-bll/store";
 
-type FormType = {
-  email?: string
-  password?: string
-  rememberMe?: boolean
+export type FormType = {
+  email: string
+  password: string
+  rememberMe: boolean
 }
 
-
 export const LoginForm = () => {
+
+  const dispatch = useAppDispatch();
+  const {appIsLoading, appError} = useAppSelector(state => state.app);
+
   const formik = useFormik({
 
     initialValues: {
       email: '',
       password: '',
-      rememberMe: '',
+      rememberMe: true,
     },
     validate: (values) => {
-      const errors: FormType = {};
+      const errors = {} as FormType;
 
       if (!values.email) {
         errors.email = 'Email is required';
@@ -40,7 +45,7 @@ export const LoginForm = () => {
     },
 
     onSubmit: values => {
-      console.log(values)
+      dispatch(authLoginTC(values));
       formik.resetForm();
     },
   });
@@ -60,15 +65,17 @@ export const LoginForm = () => {
             <div>{formik.errors.password}</div>}
         </div>
         <div className={s.checkBox}>
-          <CheckBox type="checkbox" name="rememberMe"/>
-          remember me
+          <CheckBox {...formik.getFieldProps('rememberMe')}
+                    checked={formik.values.rememberMe}>
+            remember me
+          </CheckBox>
         </div>
 
         <div className={s.infoDiv}>
-         {/* тут выводить ошибку сервера*/}
+         {appError}
         </div>
 
-        <Button type={'submit'}>Login</Button>
+        <Button isSpinner={appIsLoading} type={'submit'}>Login</Button>
     </form>
   )
 }

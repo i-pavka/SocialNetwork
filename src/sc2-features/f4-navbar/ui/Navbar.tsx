@@ -14,7 +14,6 @@ export const Navbar = () => {
           <SelfNavLink urlPath={PATH.FRIENDS} title={'Friends'}/>
           <SelfNavLink urlPath={PATH.NEWS} title={'News'}/>
           <SelfNavLink urlPath={PATH.SETTINGS} title={'Settings'}/>
-          <SelfNavLink urlPath={PATH.LOGIN} title={'Login'}/>
         </ul>
       </nav>
   );

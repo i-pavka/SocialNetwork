@@ -15,7 +15,6 @@ export type AppDispatchType = ThunkDispatch<AppStateType, unknown, RootActionsTy
 const rootReducer = combineReducers({
   app: appReducer,
   auth: authReducer,
-  // login: loginReducer,
   // profile: profileReducer,
 });
 

@@ -1,12 +1,13 @@
 import {instance} from "./instance";
+import {FormType} from "../../sc2-features/f1-auth/Login/ui/LoginForm/LoginForm";
 
 export const authAPI = {
   getAuthMe() {
     return instance.get(`auth/me`)
       .then(res => res.data)
   },
-  authLogIn(email: string, password: string, rememberMe: boolean) {
-    return instance.post(`auth/login`, {email, password, rememberMe})
+  authLogIn(data: FormType) {
+    return instance.post(`auth/login`, data)
       .then(res => res.data)
   },
   authLogOut() {

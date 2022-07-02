@@ -21,12 +21,11 @@ export const PATH = {
 
 }
 
-
 export const SelfRouter = () => {
   return (
     <main className={s.mainBlock}>
       <Routes>
-        <Route path={'/'} element={<Navigate to={PATH.PROFILE}/>}/>
+        <Route path={'/'} element={<Navigate to={PATH.LOGIN}/>}/>
         <Route path={PATH.PROFILE} element={<Profile/>}/>
         <Route path={PATH.LOGIN} element={<Login/>}/>
         <Route path={PATH.USERS} element={<Users/>}/>
