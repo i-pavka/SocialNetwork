@@ -10,6 +10,7 @@ import {Dialogs} from "../../../../sc2-features/f7-dialogs/ui/Dialogs";
 import {News} from "../../../../sc2-features/f8-news/ui/News";
 import {Settings} from "../../../../sc2-features/f9-settings/ui/Settings";
 import {RequireAuth} from "../../common/hoc/RequireAuth";
+import {NoticeInfo} from "../../../../sc2-features/f10-notice/NoticeInfo";
 
 export const PATH = {
   LOGIN: '/login',
@@ -19,6 +20,7 @@ export const PATH = {
   DIALOGS: '/dialogs',
   NEWS: '/news',
   SETTINGS: '/settings',
+  INFO: '/info',
 
 }
 
@@ -33,8 +35,10 @@ export const SelfRouter = () => {
         <Route path={PATH.USERS} element={<Users/>}/>
         <Route path={PATH.FRIENDS} element={
           <RequireAuth><Friends/></RequireAuth>}/>
-        <Route path={PATH.DIALOGS} element={<Dialogs/>}/>
+        <Route path={PATH.DIALOGS} element={
+          <RequireAuth><Dialogs/></RequireAuth>}/>
         <Route path={PATH.NEWS} element={<News/>}/>
+        <Route path={PATH.INFO} element={<NoticeInfo/>}/>
         <Route path={PATH.SETTINGS} element={
           <RequireAuth><Settings/></RequireAuth>}/>
         <Route path={'*'} element={<Error404/>}/>

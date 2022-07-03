@@ -4,15 +4,15 @@ import {ReactComponent as DefaultAva} from '../../../assets/img/robot_ava.svg';
 import logoIcon from '../../../assets/img/mongo.png';
 import {Button} from "../../../sc1-main/m1-ui/common/components/Button/Button";
 import {useAppDispatch, useAppSelector} from "../../../sc1-main/m2-bll/store";
-import {authLogOutTC, DataAuthType} from "../../f1-auth/Login/bll/authReducer";
+import {authLogOutTC} from "../../f1-auth/Login/bll/authReducer";
 import {useNavigate} from "react-router-dom";
 
 export const Header = () => {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const {login} = useAppSelector<DataAuthType>(state => state.auth.authData);
-  const isLoading = useAppSelector<boolean>(state => state.app.appIsLoading);
+  const {login} = useAppSelector(state => state.auth.authData);
+  const isLoading = useAppSelector(state => state.app.appIsLoading);
 
   const logOutHandler = () => {
     dispatch(authLogOutTC());
@@ -25,8 +25,8 @@ export const Header = () => {
     <header className={s.headerMain}>
       <div className={s.container}>
         <div className={s.headerContent}>
-          <div className={s.logoHeader}>
-            <img src={logoIcon} className={s.imgHeader} alt='user_logo'/>
+          <div className={s.logoHeader} onClick={() => {navigate('/')}}>
+            <img src={logoIcon} className={s.imgHeader} alt='network_logo'/>
             <span>Mongo Network</span>
           </div>
           <div className={s.userBlock}>

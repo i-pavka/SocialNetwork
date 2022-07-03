@@ -23,7 +23,7 @@ const initialState = {
     email: '',
   },
   isAuth: false,
-  appError: null as null | string,
+  // appError: null as null | string,
 }
 
 type InitialStateType = typeof initialState

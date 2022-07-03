@@ -8,8 +8,11 @@ import {useAppSelector} from "../../../../sc1-main/m2-bll/store";
 export const Login = () => {
 
   const isAuth = useAppSelector<boolean>(state => state.auth.isAuth);
-  const {state}: any = useLocation();
-  const from = state.from.pathname || "/";
+  // const {state}: any = useLocation();
+  // const from = state?.from?.pathname || "/";
+
+  const location = useLocation();
+  const from = JSON.parse(JSON.stringify(location.state))?.from?.state?.from?.pathname || "/";
 
   if (isAuth) {
     return <Navigate to={from}/>
