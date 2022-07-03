@@ -1,15 +1,18 @@
 import React from 'react';
 import s from './Login.module.scss';
 import {LoginForm} from "./LoginForm/LoginForm";
-import {Navigate} from "react-router-dom";
+import {Navigate, useLocation} from "react-router-dom";
 import {useAppSelector} from "../../../../sc1-main/m2-bll/store";
+
 
 export const Login = () => {
 
   const isAuth = useAppSelector<boolean>(state => state.auth.isAuth);
+  const {state}: any = useLocation();
+  const from = state.from.pathname || "/";
 
   if (isAuth) {
-    return <Navigate to={"/profile"}/>
+    return <Navigate to={from}/>
   }
 
   return (
@@ -24,8 +27,8 @@ export const Login = () => {
             <p>Password: free</p>
           </div>
         </div>
-          <h2>Login</h2>
-          <LoginForm/>
+        <h2>Login</h2>
+        <LoginForm/>
       </div>
     </div>
   );

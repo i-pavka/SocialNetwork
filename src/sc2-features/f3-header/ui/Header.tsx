@@ -18,7 +18,7 @@ export const Header = () => {
     dispatch(authLogOutTC());
   }
   const logInHandler = () => {
-    navigate('login');
+    navigate('/login');
   }
 
   return (

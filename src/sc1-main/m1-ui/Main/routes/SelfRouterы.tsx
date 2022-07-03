@@ -9,6 +9,7 @@ import {Friends} from "../../../../sc2-features/f6-friends/ui/Friends";
 import {Dialogs} from "../../../../sc2-features/f7-dialogs/ui/Dialogs";
 import {News} from "../../../../sc2-features/f8-news/ui/News";
 import {Settings} from "../../../../sc2-features/f9-settings/ui/Settings";
+import {RequireAuth} from "../../common/hoc/RequireAuth";
 
 export const PATH = {
   LOGIN: '/login',
@@ -25,15 +26,17 @@ export const SelfRouter = () => {
   return (
     <main className={s.mainBlock}>
       <Routes>
-        <Route path={'/'} element={<Navigate to={PATH.LOGIN}/>}/>
-        <Route path={PATH.PROFILE} element={<Profile/>}/>
+        <Route path={'/'} element={<Navigate to={PATH.PROFILE}/>}/>
+        <Route path={PATH.PROFILE} element={
+          <RequireAuth><Profile/></RequireAuth>}/>
         <Route path={PATH.LOGIN} element={<Login/>}/>
         <Route path={PATH.USERS} element={<Users/>}/>
-        <Route path={PATH.FRIENDS} element={<Friends/>}/>
+        <Route path={PATH.FRIENDS} element={
+          <RequireAuth><Friends/></RequireAuth>}/>
         <Route path={PATH.DIALOGS} element={<Dialogs/>}/>
         <Route path={PATH.NEWS} element={<News/>}/>
-        <Route path={PATH.SETTINGS} element={<Settings/>}/>
-
+        <Route path={PATH.SETTINGS} element={
+          <RequireAuth><Settings/></RequireAuth>}/>
         <Route path={'*'} element={<Error404/>}/>
       </Routes>
     </main>
