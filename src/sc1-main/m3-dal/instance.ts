@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {apiConfig} from "./config";
+import {apiConfig} from "../../sc3-utils/config";
 
 export const instance = axios.create({
   withCredentials: true,
