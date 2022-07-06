@@ -6,7 +6,6 @@ export const RequireAuth = ({children}: { children: JSX.Element }) => {
 
   const isAuth = useAppSelector<boolean>(state => state.auth.isAuth);
   const location = useLocation();
-  console.log(location)
 
   if (!isAuth && location.pathname === '/profile') {
     return <Navigate to={"/login"} state={{from: location}} replace/>
