@@ -9,6 +9,10 @@ export const profileAPI = {
     return instance.get(`profile/status/${profileId}`)
       .then(res => res.data)
   },
+  changeProfileStatus(status: string) {
+    return instance.put(`profile/status`, {status})
+      .then(res => res.data)
+  },
 }
 
 

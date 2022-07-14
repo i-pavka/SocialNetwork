@@ -1,11 +1,13 @@
-import React, {useEffect, useId} from 'react';
+import React, {useEffect, useId, useState} from 'react';
 import s from './Profile.module.scss';
 import {useAppDispatch, useAppSelector} from "../../../sc1-main/m2-bll/store";
 import {MainSpinner} from "../../../sc1-main/m1-ui/common/components/MainSpinner/MainSpinner";
-import {getProfileDataTC, getProfileStatusTC} from "../bll/profileReducer";
+import {changeProfileStatusTC, getProfileDataTC, getProfileStatusTC} from "../bll/profileReducer";
 import avaMain from '../../../assets/img/ava_large.jpeg';
 import avaSmall from '../../../assets/img/small_ava.jpg';
 import {useParams} from "react-router-dom";
+import {InputText} from "../../../sc1-main/m1-ui/common/components/InputText/InputText";
+import {Button} from "../../../sc1-main/m1-ui/common/components/Button/Button";
 
 export const Profile = () => {
 
@@ -19,9 +21,12 @@ export const Profile = () => {
     photos, contacts,
     aboutMe, lookingForAJobDescription
   } = useAppSelector(state => state.profile.profile);
-  const {status,} = useAppSelector(state => state.profile);
+  const {status, isLoadingProfile} = useAppSelector(state => state.profile);
   const isLoading = useAppSelector(state => state.app.appIsLoading);
   const keyId = useId();
+
+  const [statusValue, setStatusValue] = useState(status);
+  const [editMode, setEditMode] = useState<boolean>(false);
 
   useEffect(() => {
     let loadID;
@@ -33,6 +38,15 @@ export const Profile = () => {
     dispatch(getProfileDataTC(loadID));
     dispatch(getProfileStatusTC(loadID));
   }, [dispatch, urlUserID]);
+
+  useEffect(() => {
+    setStatusValue(status);
+  }, [status]);
+
+  const editModeHandler = () => {
+    if (status !== statusValue) dispatch(changeProfileStatusTC(statusValue));
+    setEditMode(prevState => !prevState);
+  }
 
   if (isLoading) {
     return <MainSpinner/>
@@ -49,7 +63,13 @@ export const Profile = () => {
         <div className={s.nameBlock}>
           <h1>{fullName}</h1>
           <p>Status:</p>
-          <h2>{status}</h2>
+          <div className={s.statusBlock}>
+            <h2>{editMode ? null : status}</h2>
+            {editMode ? <InputText value={statusValue} onChangeText={setStatusValue}/> : null}
+            <Button onClick={editModeHandler}
+                    isSpinner={isLoadingProfile}
+                    className={s.buttonChange}>edit</Button>
+          </div>
         </div>
       </div>
       <div className={s.infoBlock}>

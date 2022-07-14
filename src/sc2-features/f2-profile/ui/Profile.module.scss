@@ -4,8 +4,7 @@
   color: var(--color-heading-1);
   padding: 10px;
   justify-content: space-evenly;
-
-  & .aboutMe {
+  .aboutMe {
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -17,10 +16,25 @@
   flex-direction: column;
   max-width: 300px;
   margin-right: 10px;
-
-  & .nameBlock {
+  .nameBlock {
     text-align: center;
     margin: 0 auto;
+    & p {
+      padding: 0;
+      margin: 0;
+    }
+    .statusBlock {
+      display: flex;
+      min-height: 110px;
+      flex-direction: column;
+      align-items: center;
+      .buttonChange {
+        padding: 0 10px;
+      }
+      & h2 {
+        margin-bottom: 5px;
+      }
+    }
   }
 }
 
@@ -31,9 +45,7 @@
 
 .smallAva {
   margin: -70px auto 0;
-
   & img {
-
     width: 100px;
     border-radius: 50%;
     border: 2px solid white;
@@ -44,8 +56,7 @@
   display: flex;
   flex-direction: column;
   color: var(--color-paragraph-1);
-
-  & .contactBlock {
+  .contactBlock {
     display: flex;
     justify-content: space-between;
     & div {

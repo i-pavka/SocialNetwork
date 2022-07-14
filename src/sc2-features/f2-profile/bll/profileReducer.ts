@@ -38,7 +38,7 @@ const initialState = {
     {id: uId(), message: "Bay!", likesCount: 10},
   ] as PostsType[],
   profile: {} as ProfileType,
-  isFetching: true,
+  isLoadingProfile: false,
   status: '',
 }
 
@@ -49,6 +49,7 @@ export const profileReducer = (
   switch (action.type) {
     case "profile/SET-PROFILE-DATA":
     case "profile/SET-PROFILE-STATUS":
+    case "profile/TOGGLE-PROFILE-LOADING":
       return {...state, ...action.payload}
     default:
       return state
@@ -57,12 +58,15 @@ export const profileReducer = (
 
 export type ProfileActionType = ReturnType<typeof setProfileDataAC>
 | ReturnType<typeof setProfileStatusAC>
+| ReturnType<typeof toggleProfileLoadingAC>
 
 // Action creators
 export const setProfileDataAC = (profile: ProfileType) =>
   ({type: "profile/SET-PROFILE-DATA", payload: {profile}} as const);
 export const setProfileStatusAC = (status: string) =>
   ({type: "profile/SET-PROFILE-STATUS", payload: {status}} as const);
+export const toggleProfileLoadingAC = (isLoadingProfile: boolean) =>
+  ({type: "profile/TOGGLE-PROFILE-LOADING", payload: {isLoadingProfile}} as const);
 
 // Thunks
 export const getProfileDataTC = (userId: string = ''): AppThunkType => (dispatch, getState) => {
@@ -95,6 +99,21 @@ export const getProfileStatusTC = (userId: string = ''): AppThunkType => (dispat
         : (error.message + ', more details in the console');
       console.log('Error: ', errorMessage);
     }).finally(() => dispatch(toggleAppLoadingAC(false)));
+};
+
+export const changeProfileStatusTC = (status: string): AppThunkType => (dispatch) => {
+  dispatch(toggleProfileLoadingAC(true));
+  profileAPI.changeProfileStatus(status)
+    .then(res => {
+      dispatch(setProfileStatusAC(status));
+    })
+    .catch(error => {
+      const errorMessage = error.response
+        ? error.response.data.error
+        : (error.message + ', more details in the console');
+      console.log('Error: ', errorMessage);
+    })
+    .finally(() => dispatch(toggleProfileLoadingAC(false)));
 };
 
 

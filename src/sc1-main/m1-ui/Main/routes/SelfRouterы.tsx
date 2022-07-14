@@ -29,8 +29,7 @@ export const SelfRouter = () => {
     <main className={s.mainBlock}>
       <Routes>
         <Route path={'/'} element={<Navigate to={PATH.PROFILE}/>}/>
-        <Route path={PATH.PROFILE} element={
-          <RequireAuth><Profile/></RequireAuth>}/>
+        <Route path={PATH.PROFILE} element={<Profile/>}/>
         <Route path={PATH.LOGIN} element={<Login/>}/>
         <Route path={PATH.USERS} element={<Users/>}/>
         <Route path={PATH.FRIENDS} element={
