@@ -10,9 +10,6 @@ export const Login = () => {
   const {state} = useLocation() as { state: { from: { state: { from: { pathname: string } } } } };
   const from = state?.from?.state?.from?.pathname || "/";
 
-  // const location = useLocation();
-  // const from = JSON.parse(JSON.stringify(location.state))?.from?.state?.from?.pathname || "/";
-
   if (isAuth) {
     return <Navigate to={from}/>
   }
@@ -22,8 +19,10 @@ export const Login = () => {
       <div className={s.loginBlock}>
         <div className={s.infoBlock}>
           <h2>Mongo Network</h2>
-          <span>To log in get registered here
-             Or use common test account credentials:</span>
+          <p>To log in get registered
+            <a href="https://social-network.samuraijs.com/signUp" target='_blank'>here</a>
+          </p>
+          <p>Or use common test account credentials</p>
           <div className={s.loginData}>
             <p>Email: free@samuraijs.com</p>
             <p>Password: free</p>

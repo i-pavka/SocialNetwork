@@ -7,6 +7,19 @@
 .infoBlock {
   display: flex;
   flex-direction: column;
+  & a {
+    font-size: 14px;
+    padding: 5px 8px;
+    border-radius: 4px;
+    border: 1px solid #00684A;
+    color: var(--color-heading-1);
+    background: var(--color-bg-4);
+    margin-left: 5px;
+    transition: all .3s;
+    &:hover {
+      border-radius: 19px;
+    }
+  }
 }
 
 .loginBlock {

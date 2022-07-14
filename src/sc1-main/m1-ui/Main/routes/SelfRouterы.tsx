@@ -14,7 +14,7 @@ import {NoticeInfo} from "../../../../sc2-features/f10-notice/NoticeInfo";
 
 export const PATH = {
   LOGIN: '/login',
-  PROFILE: '/profile',
+  PROFILE: '/profile/*',
   USERS: '/users',
   FRIENDS: '/friends',
   DIALOGS: '/dialogs',

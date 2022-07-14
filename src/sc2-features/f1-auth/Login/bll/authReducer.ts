@@ -5,25 +5,18 @@ import {FormType} from "../ui/LoginForm/LoginForm";
 
 
 export type DataAuthType = {
-  id: number,
+  id: string,
   login: string,
   email: string,
-}
-export type AuthType = {
-  data: DataAuthType,
-  messages: string[],
-  fieldsErrors: string[],
-  resultCode: number
 }
 
 const initialState = {
   authData: {
-    id: 0,
+    id: '',
     login: '',
     email: '',
   },
   isAuth: false,
-  // appError: null as null | string,
 }
 
 type InitialStateType = typeof initialState
@@ -50,7 +43,7 @@ export const toggleIsAuthAC = (isAuth: boolean) => (
 export const getAuthTC = (): AppThunkType => (dispatch) => {
   authAPI.getAuthMe()
     .then(res => {
-      console.log(res)
+      // console.log('auth/me:', res)
       if (res.resultCode === 0) {
         dispatch(setAuthUserDataAC(res.data));
         dispatch(toggleIsAuthAC(true));
@@ -69,7 +62,7 @@ export const authLoginTC = (data: FormType): AppThunkType => (dispatch) => {
   dispatch(toggleAppLoadingAC(true));
   authAPI.authLogIn(data)
     .then(res => {
-      console.log(res);
+      // console.log('auth/login', res);
       if (res.resultCode === 0) {
         dispatch(getAuthTC());
         console.log(res.data.userId)
@@ -87,7 +80,6 @@ export const authLogOutTC = (): AppThunkType => (dispatch) => {
   dispatch(toggleAppLoadingAC(true));
   authAPI.authLogOut()
     .then(res => {
-      console.log(res)
       dispatch(setAuthUserDataAC(res.data));
       dispatch(toggleIsAuthAC(false));
     }).catch(error => {

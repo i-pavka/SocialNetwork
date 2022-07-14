@@ -10,11 +10,11 @@ export const Snackbar = () => {
   const error = useAppSelector<string | null>(state => state.app.appError);
 
   useEffect(() => {
-    const timeout_ID = setTimeout(() => {
+    const timerID = setTimeout(() => {
       dispatch(setAppErrorAC(null));
     }, 10000);
     return () => {
-      clearTimeout(timeout_ID);
+      clearTimeout(timerID);
     }
   }, [dispatch, error]);
 
