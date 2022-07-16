@@ -4,64 +4,23 @@
   color: var(--color-heading-1);
   padding: 10px;
   justify-content: space-evenly;
-  .aboutMe {
+  .infoBlock {
     display: flex;
     flex-direction: column;
-    text-align: center;
-  }
-}
-
-.avaBlock {
-  display: flex;
-  flex-direction: column;
-  max-width: 300px;
-  margin-right: 10px;
-  .nameBlock {
-    text-align: center;
-    margin: 0 auto;
-    & p {
-      padding: 0;
-      margin: 0;
-    }
-    .statusBlock {
+    .aboutMe {
       display: flex;
-      min-height: 110px;
       flex-direction: column;
-      align-items: center;
-      .buttonChange {
-        padding: 0 10px;
-      }
-      & h2 {
+      text-align: center;
+    }
+    .contactBlock {
+      display: flex;
+      justify-content: space-between;
+      & div {
+        width: 150px;
         margin-bottom: 5px;
       }
     }
   }
 }
 
-.largeAva {
-  width: 300px;
-  border-radius: 8px;
-}
 
-.smallAva {
-  margin: -70px auto 0;
-  & img {
-    width: 100px;
-    border-radius: 50%;
-    border: 2px solid white;
-  }
-}
-
-.infoBlock {
-  display: flex;
-  flex-direction: column;
-  color: var(--color-paragraph-1);
-  .contactBlock {
-    display: flex;
-    justify-content: space-between;
-    & div {
-      width: 150px;
-      margin-bottom: 5px;
-    }
-  }
-}

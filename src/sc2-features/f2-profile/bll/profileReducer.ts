@@ -8,7 +8,10 @@ export type PostsType = {
   message: string
   likesCount: number
 }
-
+type ProfilePhoto = {
+  small: null | string
+  large: null | string
+}
 export type ProfileType = {
   aboutMe: null | string
   contacts: {
@@ -25,10 +28,7 @@ export type ProfileType = {
   lookingForAJobDescription: null | string
   fullName: string
   userId: string
-  photos: {
-    small: null | string
-    large: null | string
-  },
+  photos: ProfilePhoto,
 }
 
 const initialState = {
@@ -51,6 +51,8 @@ export const profileReducer = (
     case "profile/SET-PROFILE-STATUS":
     case "profile/TOGGLE-PROFILE-LOADING":
       return {...state, ...action.payload}
+    case "profile/CHANGE-PROFILE-PHOTO":
+      return {...state, profile: {...state.profile, ...action.payload}}
     default:
       return state
   }
@@ -59,6 +61,7 @@ export const profileReducer = (
 export type ProfileActionType = ReturnType<typeof setProfileDataAC>
 | ReturnType<typeof setProfileStatusAC>
 | ReturnType<typeof toggleProfileLoadingAC>
+| ReturnType<typeof changeProfilePhotoAC>
 
 // Action creators
 export const setProfileDataAC = (profile: ProfileType) =>
@@ -67,6 +70,8 @@ export const setProfileStatusAC = (status: string) =>
   ({type: "profile/SET-PROFILE-STATUS", payload: {status}} as const);
 export const toggleProfileLoadingAC = (isLoadingProfile: boolean) =>
   ({type: "profile/TOGGLE-PROFILE-LOADING", payload: {isLoadingProfile}} as const);
+export const changeProfilePhotoAC = (photos: ProfilePhoto) =>
+  ({type: "profile/CHANGE-PROFILE-PHOTO", payload: {photos}} as const);
 
 // Thunks
 export const getProfileDataTC = (userId: string = ''): AppThunkType => (dispatch, getState) => {
@@ -79,8 +84,8 @@ export const getProfileDataTC = (userId: string = ''): AppThunkType => (dispatch
     })
     .catch(error => {
       const errorMessage = error.response
-        ? error.response.data.error
-        : (error.message + ', more details in the console');
+        ? error.message
+        : (`${error.message}, more details in the console`);
       console.log('Error: ', errorMessage);
     }).finally(() => dispatch(toggleAppLoadingAC(false)));
 };
@@ -95,8 +100,8 @@ export const getProfileStatusTC = (userId: string = ''): AppThunkType => (dispat
     })
     .catch(error => {
       const errorMessage = error.response
-        ? error.response.data.error
-        : (error.message + ', more details in the console');
+        ? error.message
+        : (`${error.message}, more details in the console`);
       console.log('Error: ', errorMessage);
     }).finally(() => dispatch(toggleAppLoadingAC(false)));
 };
@@ -110,11 +115,28 @@ export const changeProfileStatusTC = (status: string): AppThunkType => (dispatch
     .catch(error => {
       const errorMessage = error.response
         ? error.response.data.error
-        : (error.message + ', more details in the console');
+        : (`${error.message}, more details in the console`);
       console.log('Error: ', errorMessage);
     })
     .finally(() => dispatch(toggleProfileLoadingAC(false)));
 };
+
+export const setProfilePhotoTC = (photoFile: FormData): AppThunkType => (dispatch) => {
+  dispatch(toggleProfileLoadingAC(true));
+  profileAPI.setProfilePhoto(photoFile)
+    .then(res => {
+      // console.log('Photo: ',res);
+      dispatch(changeProfilePhotoAC(res.data.photos));
+    })
+    .catch(error => {
+      const errorMessage = error.response
+        ? error.response.data.error
+        : (`${error.message}, more details in the console`);
+      console.log('Error: ', errorMessage);
+    })
+    .finally(() => dispatch(toggleProfileLoadingAC(false)));
+};
+
 
 
 

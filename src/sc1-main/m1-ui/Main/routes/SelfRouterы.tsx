@@ -11,10 +11,11 @@ import {News} from "../../../../sc2-features/f8-news/ui/News";
 import {Settings} from "../../../../sc2-features/f9-settings/ui/Settings";
 import {RequireAuth} from "../../common/hoc/RequireAuth";
 import {NoticeInfo} from "../../../../sc2-features/f10-notice/NoticeInfo";
+import {useAppSelector} from "../../../m2-bll/store";
 
 export const PATH = {
   LOGIN: '/login',
-  PROFILE: '/profile/*',
+  PROFILE: '/profile/',
   USERS: '/users',
   FRIENDS: '/friends',
   DIALOGS: '/dialogs',
@@ -25,11 +26,14 @@ export const PATH = {
 }
 
 export const SelfRouter = () => {
+  const loginID = useAppSelector(state => state.auth.authData.id);
+  const profileID = loginID ? loginID : '2' // example of a profile without a login
+
   return (
     <main className={s.mainBlock}>
       <Routes>
-        <Route path={'/'} element={<Navigate to={PATH.PROFILE}/>}/>
-        <Route path={PATH.PROFILE} element={<Profile/>}/>
+        <Route path={'/'} element={<Navigate to={PATH.PROFILE + profileID}/>}/>
+        <Route path={PATH.PROFILE + ':id'} element={<Profile/>}/>
         <Route path={PATH.LOGIN} element={<Login/>}/>
         <Route path={PATH.USERS} element={<Users/>}/>
         <Route path={PATH.FRIENDS} element={

@@ -53,7 +53,7 @@ export const getAuthTC = (): AppThunkType => (dispatch) => {
     .catch(error => {
       const errorMessage = error.response
         ? error.response.data.error
-        : (error.message + ', more details in the console');
+        : (`${error.message}, more details in the console`);
       console.log('Error: ', errorMessage);
     }).finally(() => dispatch(setAppIsInitializedAC(true)));
 };
@@ -71,7 +71,7 @@ export const authLoginTC = (data: FormType): AppThunkType => (dispatch) => {
     }).catch(error => {
     const errorMessage = error.response
       ? error.response.data.error
-      : (error.message + ', more details in the console');
+      : (`${error.message}, more details in the console`);
     console.log('Error: ', errorMessage);
   }).finally(() => dispatch(toggleAppLoadingAC(false)));
 }
@@ -85,7 +85,7 @@ export const authLogOutTC = (): AppThunkType => (dispatch) => {
     }).catch(error => {
     const errorMessage = error.response
       ? error.response.data.error
-      : (error.message + ', more details in the console');
+      : (`${error.message}, more details in the console`);
     console.log('Error: ', errorMessage);
   }).finally(() => dispatch(toggleAppLoadingAC(false)));
 }
