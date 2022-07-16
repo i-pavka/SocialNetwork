@@ -19,9 +19,9 @@ export const InputFile: React.FC<ChangesInputsPropsType> = (
 ) => {
 
   const upload = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.files);
     if (error) setError('');
     const newFile = e.target.files && e.target.files[0];
+
     // if (newFile && newFile.size > 1048576) { // photo size validation
     //   return setError('The size of the photo is not more than 1MB');
     // }

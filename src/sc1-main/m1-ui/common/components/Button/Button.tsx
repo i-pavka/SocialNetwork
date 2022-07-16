@@ -4,7 +4,6 @@ import s from './Button.module.scss';
 type DefaultButtonPropsType = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
 type C = 'default' | 'delete' | 'other'
 type ButtonLoadPropsType = DefaultButtonPropsType & {
-  red?: boolean
   isSpinner?: boolean
   color?: C
 }
@@ -15,7 +14,6 @@ const colors: { [Key in C]: string } = {
 }
 export const Button: React.FC<ButtonLoadPropsType> = (
   {
-    red,
     isSpinner,
     color = 'default',
     className,
@@ -23,11 +21,12 @@ export const Button: React.FC<ButtonLoadPropsType> = (
   }
 ) => {
 
-  const finalStyle = `${s.btnStyle} ${isSpinner ? s.spinner : ''} ${red ? s.red : ""} ${className ? className : ""}`;
+  const finalStyle = `${s.btnStyle} ${isSpinner ? s.spinner : ''} ${className ? className : ""}`;
+  const textColor = color === 'default' ? '' : '#FCFCFC';
 
   return (
     <button className={finalStyle}
-            style={{backgroundColor: colors[color]}}
+            style={{backgroundColor: colors[color], color: textColor}}
             disabled={isSpinner} {...restProps}/>
   )
 };

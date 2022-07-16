@@ -1,24 +1,27 @@
 import React from 'react';
-import s from './MainSpinner.module.scss'
+import s from './MiniSpinner.module.css'
 
-type MainSpinnerPropsType = {
+type MiniSpinnerPropsType = {
   customMainStyle?: string
   customSizeStyle?: string
+  customContainerStyle?: string
 }
 
-export const MainSpinner: React.FC<MainSpinnerPropsType> = (
+export const MiniSpinner: React.FC<MiniSpinnerPropsType> = (
   {
     customMainStyle,
     customSizeStyle,
+    customContainerStyle,
   }
 ) => {
 
   const finalMainStyle = `${s.mainBlock} ${customMainStyle ? customMainStyle : ''}`
   const finalSizeStyle = `${s.speedingWheel} ${customSizeStyle ? customSizeStyle : ''}`
+  const finalContainerStyle = `${s.container} ${customContainerStyle ? customContainerStyle : ''}`
 
   return (
     <div className={finalMainStyle}>
-      <div className={s.container}>
+      <div className={finalContainerStyle}>
         <div className={finalSizeStyle}/>
       </div>
     </div>

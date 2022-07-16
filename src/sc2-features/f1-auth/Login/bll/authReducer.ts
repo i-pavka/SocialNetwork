@@ -2,6 +2,7 @@ import {AppThunkType} from "../../../../sc1-main/m2-bll/store";
 import {authAPI} from "../../../../sc1-main/m3-dal/auth-api";
 import {setAppErrorAC, setAppIsInitializedAC, toggleAppLoadingAC} from "../../../../sc1-main/m2-bll/appReducer";
 import {FormType} from "../ui/LoginForm/LoginForm";
+import {getProfileDataTC} from "../../../f2-profile/bll/profileReducer";
 
 
 export type DataAuthType = {
@@ -65,7 +66,7 @@ export const authLoginTC = (data: FormType): AppThunkType => (dispatch) => {
       // console.log('auth/login', res);
       if (res.resultCode === 0) {
         dispatch(getAuthTC());
-        console.log(res.data.userId)
+        dispatch(getProfileDataTC(res.data.userId));
       }
       dispatch(setAppErrorAC(res.messages[0]));
     }).catch(error => {

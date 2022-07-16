@@ -31,7 +31,7 @@
 }
 
 .smallAva {
-  margin: -70px auto 0 100px;
+  margin: -70px auto 0 105px;
   & img {
     width: 100px;
     height: 100px;
@@ -68,4 +68,7 @@
   flex-direction: column;
   margin: 0 auto;
   max-width: 200px;
+  & button {
+    padding: 5px 10px;
+  }
 }

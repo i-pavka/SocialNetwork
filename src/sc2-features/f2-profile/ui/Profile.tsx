@@ -9,7 +9,7 @@ import {AvatarBlock} from "./AvatarBlock/AvatarBlock";
 export const Profile = () => {
 
   const urlParams = useParams<'id'>();
-  const urlUserID = urlParams["id"];
+  const urlUserID = urlParams.id;
 
   const dispatch = useAppDispatch();
   const {
@@ -33,7 +33,7 @@ export const Profile = () => {
 
   return (
     <div className={s.profileMain}>
-      <AvatarBlock/>
+      <AvatarBlock urlID={urlUserID as string}/>
       <div className={s.infoBlock}>
         <div className={s.aboutMe}>
           <h3>{aboutMe}</h3>
