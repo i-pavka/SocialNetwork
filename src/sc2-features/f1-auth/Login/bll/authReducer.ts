@@ -18,6 +18,7 @@ const initialState = {
     email: '',
   },
   isAuth: false,
+  headerLogo: '',
 }
 
 type InitialStateType = typeof initialState
@@ -27,6 +28,7 @@ export const authReducer = (
   switch (action.type) {
     case "auth/SET-USER-DATA":
     case "auth/TOGGLE-IS-AUTH":
+    case "auth/SET-HEADER-LOGO":
       return {...state, ...action.payload};
     default:
       return state
@@ -35,11 +37,14 @@ export const authReducer = (
 
 export type AuthActionType = ReturnType<typeof setAuthUserDataAC>
   | ReturnType<typeof toggleIsAuthAC>
+  | ReturnType<typeof setHeaderLogoAC>
 
 export const setAuthUserDataAC = (authData: DataAuthType) => (
   {type: "auth/SET-USER-DATA", payload: {authData}} as const);
 export const toggleIsAuthAC = (isAuth: boolean) => (
   {type: "auth/TOGGLE-IS-AUTH", payload: {isAuth}} as const);
+export const setHeaderLogoAC = (headerLogo: string) => (
+  {type: "auth/SET-HEADER-LOGO", payload: {headerLogo}} as const);
 
 export const getAuthTC = (): AppThunkType => (dispatch) => {
   authAPI.getAuthMe()

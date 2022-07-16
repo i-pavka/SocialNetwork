@@ -2,6 +2,7 @@ import {uId} from "../../../sc3-utils/uid";
 import {AppThunkType} from "../../../sc1-main/m2-bll/store";
 import {toggleAppLoadingAC} from "../../../sc1-main/m2-bll/appReducer";
 import {profileAPI} from "../../../sc1-main/m3-dal/profile-api";
+import {setHeaderLogoAC} from "../../f1-auth/Login/bll/authReducer";
 
 export type PostsType = {
   id: string
@@ -77,8 +78,9 @@ export const changeProfilePhotoAC = (photos: ProfilePhoto) =>
 export const getProfileDataTC = (userId: string = ''): AppThunkType => (dispatch, getState) => {
   const {id} = getState().auth.authData;
   dispatch(toggleAppLoadingAC(true));
-  profileAPI.getProfileData(userId ? userId : id)
+  profileAPI.getProfileData(userId)
     .then(res => {
+      id === res.userId && dispatch(setHeaderLogoAC(res.photos.small));
       dispatch(setProfileDataAC(res));
       // console.log('profile/:profileId', res);
     })
@@ -90,10 +92,9 @@ export const getProfileDataTC = (userId: string = ''): AppThunkType => (dispatch
     }).finally(() => dispatch(toggleAppLoadingAC(false)));
 };
 
-export const getProfileStatusTC = (userId: string = ''): AppThunkType => (dispatch, getState) => {
-  const {id} = getState().auth.authData;
+export const getProfileStatusTC = (userId: string = ''): AppThunkType => (dispatch) => {
   dispatch(toggleAppLoadingAC(true));
-  profileAPI.getProfileStatus(userId ? userId : id)
+  profileAPI.getProfileStatus(userId)
     .then(res => {
       dispatch(setProfileStatusAC(res));
       // console.log('profile/Status', res);

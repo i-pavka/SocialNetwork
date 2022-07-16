@@ -14,7 +14,7 @@ export const Header = () => {
   const {login} = useAppSelector(state => state.auth.authData);
   const {isAuth} = useAppSelector(state => state.auth);
   const isLoading = useAppSelector(state => state.app.appIsLoading);
-  const smallAva = useAppSelector(state => state.profile.profile.photos?.small);
+  const smallAva = useAppSelector(state => state.auth.headerLogo);
 
   const logOutHandler = () => {
     dispatch(authLogOutTC());
