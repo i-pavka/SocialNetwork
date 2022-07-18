@@ -2,6 +2,7 @@ import {uId} from "../../../sc3-utils/uid";
 import {AppThunkType} from "../../../sc1-main/m2-bll/store";
 import {toggleAppLoadingAC} from "../../../sc1-main/m2-bll/appReducer";
 import {profileAPI} from "../../../sc1-main/m3-dal/profile-api";
+import {saveState} from "../../../sc3-utils/localstorage";
 import {setHeaderLogoAC} from "../../f1-auth/Login/bll/authReducer";
 
 export type PostsType = {
@@ -60,9 +61,9 @@ export const profileReducer = (
 }
 
 export type ProfileActionType = ReturnType<typeof setProfileDataAC>
-| ReturnType<typeof setProfileStatusAC>
-| ReturnType<typeof toggleProfileLoadingAC>
-| ReturnType<typeof changeProfilePhotoAC>
+  | ReturnType<typeof setProfileStatusAC>
+  | ReturnType<typeof toggleProfileLoadingAC>
+  | ReturnType<typeof changeProfilePhotoAC>
 
 // Action creators
 export const setProfileDataAC = (profile: ProfileType) =>
@@ -76,13 +77,15 @@ export const changeProfilePhotoAC = (photos: ProfilePhoto) =>
 
 // Thunks
 export const getProfileDataTC = (userId: string = ''): AppThunkType => (dispatch, getState) => {
-  const {id} = getState().auth.authData;
+  const id = getState().auth.userID;
   dispatch(toggleAppLoadingAC(true));
   profileAPI.getProfileData(userId)
     .then(res => {
-      id === res.userId && dispatch(setHeaderLogoAC(res.photos.small));
+      if (Number(id) === res.userId) {
+        dispatch(setHeaderLogoAC(res.photos.small))
+        saveState(res.photos.small);
+      }
       dispatch(setProfileDataAC(res));
-      // console.log('profile/:profileId', res);
     })
     .catch(error => {
       const errorMessage = error.response
@@ -97,7 +100,6 @@ export const getProfileStatusTC = (userId: string = ''): AppThunkType => (dispat
   profileAPI.getProfileStatus(userId)
     .then(res => {
       dispatch(setProfileStatusAC(res));
-      // console.log('profile/Status', res);
     })
     .catch(error => {
       const errorMessage = error.response
@@ -126,8 +128,8 @@ export const setProfilePhotoTC = (photoFile: FormData): AppThunkType => (dispatc
   dispatch(toggleProfileLoadingAC(true));
   profileAPI.setProfilePhoto(photoFile)
     .then(res => {
-      // console.log('Photo: ',res);
       dispatch(changeProfilePhotoAC(res.data.photos));
+      dispatch(setHeaderLogoAC(res.data.photos.small));
     })
     .catch(error => {
       const errorMessage = error.response
