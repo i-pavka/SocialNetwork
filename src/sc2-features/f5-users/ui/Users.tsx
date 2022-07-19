@@ -21,6 +21,9 @@ export const Users = () => {
       <p>
         <NavLink to={`/profile/15`}>USER_15</NavLink>
       </p>
+      <p>
+        <NavLink to={`/profile/23216`}>USER_23216</NavLink>
+      </p>
     </div>
   );
 };

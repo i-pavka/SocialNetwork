@@ -5,6 +5,7 @@ import {profileAPI} from "../../../sc1-main/m3-dal/profile-api";
 import {saveState} from "../../../sc3-utils/localstorage";
 import {setHeaderLogoAC} from "../../f1-auth/Login/bll/authReducer";
 import {EditProfileFormType} from "../ui/EditProfileData/EditProfileData";
+import {makeErrorObject} from "../../../sc3-utils/handleError";
 
 export type PostsType = {
   id: string
@@ -43,7 +44,7 @@ const initialState = {
   profile: {} as ProfileType,
   isLoadingProfile: false,
   status: '',
-  formError: [] as string[],
+  formError: {} as {[key: string]: string},
 }
 
 type InitialStateType = typeof initialState
@@ -78,7 +79,7 @@ export const toggleProfileLoadingAC = (isLoadingProfile: boolean) =>
   ({type: "profile/TOGGLE-PROFILE-LOADING", payload: {isLoadingProfile}} as const);
 export const changeProfilePhotoAC = (photos: ProfilePhoto) =>
   ({type: "profile/CHANGE-PROFILE-PHOTO", payload: {photos}} as const);
-export const setFormErrorAC = (formError: string[]) =>
+export const setFormErrorAC = (formError: {[key: string]: string}) =>
   ({type: "profile/SET-FORM-ERROR", payload: {formError}} as const);
 
 // Thunks
@@ -151,14 +152,12 @@ export const setProfileDataTC = (profileData: EditProfileFormType): AppThunkType
   dispatch(toggleProfileLoadingAC(true));
   profileAPI.setProfileData(profileData)
     .then(res => {
-      console.log(res);
       if (res.resultCode === 0) {
         dispatch(getProfileDataTC(id));
       } else {
-        dispatch(setFormErrorAC(res.messages))
-        console.log('Block Error...')
+        const finalObject = makeErrorObject(res.messages);
+        dispatch(setFormErrorAC(finalObject));
       }
-      // dispatch(setProfileDataAC(res.data))
     })
     .catch(error => {
       const errorMessage = error.response

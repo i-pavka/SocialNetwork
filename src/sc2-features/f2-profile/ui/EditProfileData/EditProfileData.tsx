@@ -11,10 +11,11 @@ import {setProfileDataTC} from "../../bll/profileReducer";
 export const EditProfileData: React.FC<EditProfileDataPropsType> = ({setIsEditData}) => {
 
   const dispatch = useAppDispatch();
-  const contacts = useAppSelector(state => state.profile.profile.contacts);
-  const formError = useAppSelector(state => state.profile.formError);
-  const appIsLoading = useAppSelector(state => state.app.appIsLoading);
+  const keyId = useId();
 
+  const contacts = useAppSelector(state => state.profile.profile.contacts);
+  const _formError = useAppSelector(state => state.profile.formError);
+  const appIsLoading = useAppSelector(state => state.app.appIsLoading);
   const {
     facebook, website, vk, github,
     twitter, youtube, mainLink, instagram
@@ -23,17 +24,20 @@ export const EditProfileData: React.FC<EditProfileDataPropsType> = ({setIsEditDa
     fullName, aboutMe,
     lookingForAJob, lookingForAJobDescription
   } = useAppSelector(state => state.profile.profile);
-  const keyId = useId();
 
-  type HandleErrorPropsType = {
-    errorArr: string[]
-  }
-  const HandleError: React.FC<HandleErrorPropsType> = ({errorArr}) => {
-    if (errorArr.length) {
-      return <div style={{ color: "red" }}> {errorArr[0]} </div>
-    }
-    return null
-  }
+  const formError = {
+    facebook: 'Invalid url format',
+    website: 'Invalid url format',
+    vk: 'Invalid url format',
+    twitter: 'Invalid url format',
+    instagram: 'Invalid url format',
+    youtube: 'Invalid url format',
+    github: 'Invalid url format',
+    mainLink: 'Invalid url format',
+    aboutMe: 'Field is required',
+    lookingForAJobDescription: 'Field is required',
+    fullName: 'Field is required'
+  } as {[key: string]: string}
 
   const formik = useFormik({
 
@@ -66,19 +70,21 @@ export const EditProfileData: React.FC<EditProfileDataPropsType> = ({setIsEditDa
         <div className={s.dataItem}>
           <span>Full name:</span>
           <InputText {...formik.getFieldProps('fullName')}/>
+          {formError.fullName && <span className={s.errorSpan}>{formError.fullName}</span>}
         </div>
         <div className={s.dataItem}>
           <span>About Me:</span>
           <textarea
             className={s.moduleTextarea}
             {...formik.getFieldProps('aboutMe')}/>
-          <HandleError errorArr={formError}/>
+          {formError.aboutMe && <span className={s.errorSpan}>{formError.aboutMe}</span>}
         </div>
         <div className={s.dataItem}>
           <span>Skills:</span>
           <textarea
             className={s.moduleTextarea}
             {...formik.getFieldProps('lookingForAJobDescription')}/>
+          {formError.lookingForAJobDescription && <span className={s.errorSpan}>{formError.lookingForAJobDescription}</span>}
         </div>
         <div className={s.dataItem}>
           <CheckBox {...formik.getFieldProps('lookingForAJob')}
@@ -91,7 +97,10 @@ export const EditProfileData: React.FC<EditProfileDataPropsType> = ({setIsEditDa
             return (
               <div key={`${keyId}-${index.toString()}`} className={s.dataItem}>
                 <div>{el[0]}:</div>
-                <div><InputText {...formik.getFieldProps(`contacts.${el[0]}`)}/></div>
+                <div>
+                  <InputText {...formik.getFieldProps(`contacts.${el[0]}`)}/>
+                  {formError[el[0]] && <span className={s.errorSpan}>{formError[el[0]]}</span>}
+                </div>
               </div>
             )
           })}
