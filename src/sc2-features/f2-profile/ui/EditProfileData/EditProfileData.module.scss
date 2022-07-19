@@ -1,0 +1,38 @@
+.mainEditProfileData {
+  display: flex;
+  max-width: 310px;
+  //justify-content: center;
+  //align-items: center;
+  flex-direction: column;
+  margin: 0 auto;
+  .dataItem {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+}
+
+.formBlock {
+  display: flex;
+  flex-direction: column;
+}
+
+.moduleTitle {
+  font-weight: 600;
+  line-height: 1;
+  text-align: center;
+  font-size: 16px;
+  color: var(--color-surface-1);
+}
+
+.moduleTextarea {
+  border: 2px solid rgba(36, 37, 74, 0.2);
+  border-radius: 8px;
+  padding: 5px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+}

@@ -1,10 +1,13 @@
-import React, {useEffect, useId} from 'react';
+import React, {useEffect, useState} from 'react';
 import s from './Profile.module.scss';
 import {useAppDispatch, useAppSelector} from "../../../sc1-main/m2-bll/store";
 import {MainSpinner} from "../../../sc1-main/m1-ui/common/components/MainSpinner/MainSpinner";
 import {getProfileDataTC, getProfileStatusTC} from "../bll/profileReducer";
 import {useParams} from "react-router-dom";
 import {AvatarBlock} from "./AvatarBlock/AvatarBlock";
+import {ProfileContacts} from "./ProfileContacts/ProfileContacts";
+import {Button} from "../../../sc1-main/m1-ui/common/components/Button/Button";
+import {EditProfileData} from "./EditProfileData/EditProfileData";
 
 export const Profile = () => {
 
@@ -14,12 +17,12 @@ export const Profile = () => {
   const dispatch = useAppDispatch();
   const {
     lookingForAJob,
-    contacts,
     aboutMe, lookingForAJobDescription
   } = useAppSelector(state => state.profile.profile);
-  const isAuth = useAppSelector(state => state.auth.isAuth);
+  const {isAuth, userID} = useAppSelector(state => state.auth);
   const isLoading = useAppSelector(state => state.app.appIsLoading);
-  const keyId = useId();
+
+  const [isEditData, setIsEditData] = useState(false)
 
   useEffect(() => {
     dispatch(getProfileDataTC(urlUserID));
@@ -33,26 +36,24 @@ export const Profile = () => {
 
   return (
     <div className={s.profileMain}>
-      <AvatarBlock urlID={urlUserID as string}/>
-      <div className={s.infoBlock}>
-        <div className={s.aboutMe}>
-          <h3>{aboutMe}</h3>
-          <div>
-            <h4>{lookingForAJob ? 'Ищу работу' : 'Уже работаю'}</h4>
-            <h4>{lookingForAJobDescription}</h4>
-          </div>
-
-        </div>
-        <h3>Contacts:</h3>
-        {contacts && Object.entries(contacts).map(([key, value], index) => {
-          return (
-            <div key={`${keyId}-${index.toString()}`} className={s.contactBlock}>
-              <div>{key}:</div>
-              <div>{value ? value : "https://social-network.samuraijs.com"}</div>
+      <div className={s.mainItem}>
+        <AvatarBlock urlID={urlUserID as string}/>
+        <div className={s.infoBlock}>
+          <div className={s.aboutMe}>
+            {aboutMe && <h3>{aboutMe}</h3>}
+            <div>
+              <h4>{lookingForAJob ? 'Ищу работу' : 'Уже работаю'}</h4>
+              <h4>{lookingForAJobDescription}</h4>
             </div>
-          )
-        })}
+          </div>
+          <ProfileContacts/>
+          {urlUserID === String(userID)
+            && <Button onClick={() => {setIsEditData(!isEditData)}}>
+              {isEditData ? 'Close' : 'Edit Profile Dta'}
+          </Button>}
+        </div>
       </div>
+      {isEditData && <EditProfileData setIsEditData={setIsEditData}/>}
     </div>
   );
 };

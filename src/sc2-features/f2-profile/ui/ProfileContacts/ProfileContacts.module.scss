@@ -1,0 +1,9 @@
+.contactBlock {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  & div {
+    max-width: 200px;
+    margin-bottom: 5px;
+  }
+}

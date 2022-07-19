@@ -4,6 +4,7 @@ import {toggleAppLoadingAC} from "../../../sc1-main/m2-bll/appReducer";
 import {profileAPI} from "../../../sc1-main/m3-dal/profile-api";
 import {saveState} from "../../../sc3-utils/localstorage";
 import {setHeaderLogoAC} from "../../f1-auth/Login/bll/authReducer";
+import {EditProfileFormType} from "../ui/EditProfileData/EditProfileData";
 
 export type PostsType = {
   id: string
@@ -29,8 +30,8 @@ export type ProfileType = {
   lookingForAJob: boolean
   lookingForAJobDescription: null | string
   fullName: string
-  userId: string
-  photos: ProfilePhoto,
+  userId?: string
+  photos?: ProfilePhoto,
 }
 
 const initialState = {
@@ -42,6 +43,7 @@ const initialState = {
   profile: {} as ProfileType,
   isLoadingProfile: false,
   status: '',
+  formError: [] as string[],
 }
 
 type InitialStateType = typeof initialState
@@ -52,6 +54,7 @@ export const profileReducer = (
     case "profile/SET-PROFILE-DATA":
     case "profile/SET-PROFILE-STATUS":
     case "profile/TOGGLE-PROFILE-LOADING":
+    case "profile/SET-FORM-ERROR":
       return {...state, ...action.payload}
     case "profile/CHANGE-PROFILE-PHOTO":
       return {...state, profile: {...state.profile, ...action.payload}}
@@ -64,6 +67,7 @@ export type ProfileActionType = ReturnType<typeof setProfileDataAC>
   | ReturnType<typeof setProfileStatusAC>
   | ReturnType<typeof toggleProfileLoadingAC>
   | ReturnType<typeof changeProfilePhotoAC>
+  | ReturnType<typeof setFormErrorAC>
 
 // Action creators
 export const setProfileDataAC = (profile: ProfileType) =>
@@ -74,6 +78,8 @@ export const toggleProfileLoadingAC = (isLoadingProfile: boolean) =>
   ({type: "profile/TOGGLE-PROFILE-LOADING", payload: {isLoadingProfile}} as const);
 export const changeProfilePhotoAC = (photos: ProfilePhoto) =>
   ({type: "profile/CHANGE-PROFILE-PHOTO", payload: {photos}} as const);
+export const setFormErrorAC = (formError: string[]) =>
+  ({type: "profile/SET-FORM-ERROR", payload: {formError}} as const);
 
 // Thunks
 export const getProfileDataTC = (userId: string = ''): AppThunkType => (dispatch, getState) => {
@@ -130,6 +136,29 @@ export const setProfilePhotoTC = (photoFile: FormData): AppThunkType => (dispatc
     .then(res => {
       dispatch(changeProfilePhotoAC(res.data.photos));
       dispatch(setHeaderLogoAC(res.data.photos.small));
+    })
+    .catch(error => {
+      const errorMessage = error.response
+        ? error.response.data.error
+        : (`${error.message}, more details in the console`);
+      console.log('Error: ', errorMessage);
+    })
+    .finally(() => dispatch(toggleProfileLoadingAC(false)));
+};
+
+export const setProfileDataTC = (profileData: EditProfileFormType): AppThunkType => (dispatch,getState) => {
+  const id = getState().auth.userID;
+  dispatch(toggleProfileLoadingAC(true));
+  profileAPI.setProfileData(profileData)
+    .then(res => {
+      console.log(res);
+      if (res.resultCode === 0) {
+        dispatch(getProfileDataTC(id));
+      } else {
+        dispatch(setFormErrorAC(res.messages))
+        console.log('Block Error...')
+      }
+      // dispatch(setProfileDataAC(res.data))
     })
     .catch(error => {
       const errorMessage = error.response
