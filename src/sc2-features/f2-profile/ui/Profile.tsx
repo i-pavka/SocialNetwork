@@ -47,12 +47,14 @@ export const Profile = () => {
             </div>
           </div>
           <ProfileContacts/>
-          {urlUserID === String(userID)
-            && <Button onClick={() => {setIsEditData(!isEditData)}}>
-              {isEditData ? 'Close' : 'Edit Profile Dta'}
-          </Button>}
         </div>
       </div>
+      {urlUserID === String(userID)
+        && <div className={s.editBlock}>
+          <Button className={s.buttonEdit} onClick={() => setIsEditData(!isEditData)}>
+            {isEditData ? 'Close' : 'Edit Profile Dta'}
+          </Button>
+        </div>}
       {isEditData && <EditProfileData setIsEditData={setIsEditData}/>}
     </div>
   );

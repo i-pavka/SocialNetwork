@@ -149,10 +149,12 @@ export const setProfilePhotoTC = (photoFile: FormData): AppThunkType => (dispatc
 
 export const setProfileDataTC = (profileData: EditProfileFormType): AppThunkType => (dispatch,getState) => {
   const id = getState().auth.userID;
+  const error = getState().profile.formError;
   dispatch(toggleProfileLoadingAC(true));
   profileAPI.setProfileData(profileData)
     .then(res => {
       if (res.resultCode === 0) {
+        Object.keys(error).length !== 0 && dispatch(setFormErrorAC({}));
         dispatch(getProfileDataTC(id));
       } else {
         const finalObject = makeErrorObject(res.messages);

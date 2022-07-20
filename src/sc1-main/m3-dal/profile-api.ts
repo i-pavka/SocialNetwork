@@ -1,5 +1,4 @@
 import {instance} from "./instance";
-import {ProfileType} from "../../sc2-features/f2-profile/bll/profileReducer";
 import {EditProfileFormType} from "../../sc2-features/f2-profile/ui/EditProfileData/EditProfileData";
 
 export const profileAPI = {

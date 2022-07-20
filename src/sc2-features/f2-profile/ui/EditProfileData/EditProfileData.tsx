@@ -14,8 +14,7 @@ export const EditProfileData: React.FC<EditProfileDataPropsType> = ({setIsEditDa
   const keyId = useId();
 
   const contacts = useAppSelector(state => state.profile.profile.contacts);
-  const _formError = useAppSelector(state => state.profile.formError);
-  const appIsLoading = useAppSelector(state => state.app.appIsLoading);
+  const {formError, isLoadingProfile} = useAppSelector(state => state.profile);
   const {
     facebook, website, vk, github,
     twitter, youtube, mainLink, instagram
@@ -24,20 +23,6 @@ export const EditProfileData: React.FC<EditProfileDataPropsType> = ({setIsEditDa
     fullName, aboutMe,
     lookingForAJob, lookingForAJobDescription
   } = useAppSelector(state => state.profile.profile);
-
-  const formError = {
-    facebook: 'Invalid url format',
-    website: 'Invalid url format',
-    vk: 'Invalid url format',
-    twitter: 'Invalid url format',
-    instagram: 'Invalid url format',
-    youtube: 'Invalid url format',
-    github: 'Invalid url format',
-    mainLink: 'Invalid url format',
-    aboutMe: 'Field is required',
-    lookingForAJobDescription: 'Field is required',
-    fullName: 'Field is required'
-  } as {[key: string]: string}
 
   const formik = useFormik({
 
@@ -59,7 +44,6 @@ export const EditProfileData: React.FC<EditProfileDataPropsType> = ({setIsEditDa
     },
     onSubmit: values => {
       dispatch(setProfileDataTC(values));
-      // formik.resetForm();
     },
   })
 
@@ -84,7 +68,8 @@ export const EditProfileData: React.FC<EditProfileDataPropsType> = ({setIsEditDa
           <textarea
             className={s.moduleTextarea}
             {...formik.getFieldProps('lookingForAJobDescription')}/>
-          {formError.lookingForAJobDescription && <span className={s.errorSpan}>{formError.lookingForAJobDescription}</span>}
+          {formError.lookingForAJobDescription &&
+            <span className={s.errorSpan}>{formError.lookingForAJobDescription}</span>}
         </div>
         <div className={s.dataItem}>
           <CheckBox {...formik.getFieldProps('lookingForAJob')}
@@ -96,21 +81,20 @@ export const EditProfileData: React.FC<EditProfileDataPropsType> = ({setIsEditDa
           {contacts && Object.entries(contacts).map((el, index) => {
             return (
               <div key={`${keyId}-${index.toString()}`} className={s.dataItem}>
-                <div>{el[0]}:</div>
-                <div>
-                  <InputText {...formik.getFieldProps(`contacts.${el[0]}`)}/>
-                  {formError[el[0]] && <span className={s.errorSpan}>{formError[el[0]]}</span>}
-                </div>
+                <span>{el[0]}:</span>
+                <InputText {...formik.getFieldProps(`contacts.${el[0]}`)}/>
+                {formError[el[0]] && <span className={s.errorSpan}>{formError[el[0]]}</span>}
               </div>
             )
           })}
         </div>
         <div style={{display: 'grid'}}>
-          <Button type={'submit'} isSpinner={appIsLoading}>Save</Button>
+          <Button type={'submit'} isSpinner={isLoadingProfile}>Save</Button>
         </div>
       </form>
-      <Button onClick={() => {setIsEditData(false)}}
-              isSpinner={appIsLoading}
+      <Button onClick={() => setIsEditData(false)}
+              isSpinner={isLoadingProfile}
+              color={'delete'}
       >Cancel</Button>
     </div>
   );
