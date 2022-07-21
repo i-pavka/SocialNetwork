@@ -8,6 +8,7 @@ import {AvatarBlock} from "./AvatarBlock/AvatarBlock";
 import {ProfileContacts} from "./ProfileContacts/ProfileContacts";
 import {Button} from "../../../sc1-main/m1-ui/common/components/Button/Button";
 import {EditProfileData} from "./EditProfileData/EditProfileData";
+import {InfoHeader} from "../../../sc1-main/m1-ui/common/components/InfoHeader/InfoHeader";
 
 export const Profile = () => {
 
@@ -39,12 +40,17 @@ export const Profile = () => {
       <div className={s.mainItem}>
         <AvatarBlock urlID={urlUserID as string}/>
         <div className={s.infoBlock}>
-          <div className={s.aboutMe}>
+          <div className={s.infoBlockItem}>
+            <InfoHeader title={'About Me'}/>
             {aboutMe && <h3>{aboutMe}</h3>}
-            <div>
-              <h4>{lookingForAJob ? 'Ищу работу' : 'Уже работаю'}</h4>
-              <h4>{lookingForAJobDescription}</h4>
-            </div>
+          </div>
+          <div className={s.infoBlockItem}>
+            <InfoHeader title={'Work'}/>
+            <h4>{lookingForAJob ? 'Ищу работу' : 'Уже работаю'}</h4>
+          </div>
+          <div className={s.infoBlockItem}>
+            <InfoHeader title={'Work Description'}/>
+            <h4>{lookingForAJobDescription}</h4>
           </div>
           <ProfileContacts/>
         </div>

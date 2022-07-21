@@ -1,9 +1,24 @@
-.contactBlock {
-  display: flex;
-  justify-content: space-between;
-  gap: 30px;
-  & div {
-    max-width: 200px;
-    margin-bottom: 5px;
+.infoBlock {
+  .itemsBlock {
+    display: flex;
+    flex-direction: column;
+    .contactItem {
+      display: inline-flex;
+      align-items: center;
+      .itemTitle {
+        color: var(--color-heading-2);
+        width: 120px;
+      }
+      .itemLink:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+  & h4 {
+    margin: 5px;
+    padding: 5px;
+  }
+  & a {
+    color: var(--color-link);
   }
 }

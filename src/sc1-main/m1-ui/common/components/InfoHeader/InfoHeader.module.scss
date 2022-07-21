@@ -1,0 +1,30 @@
+.infoHeader {
+  width: 70%;
+  font-size: 18px;
+  line-height: 18px;
+  margin: 10px auto;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  color: var(--color-heading-2);
+  &:before {
+    content: "";
+    border-bottom: 1px solid var(--color-bg-3);
+    width: 50%;
+    height: 0.5em;
+    position: absolute;
+    top: 0;
+    margin-left: calc(-50% - 10px);
+    opacity: 0.5;
+  }
+  &:after {
+    content: "";
+    border-bottom: 1px solid var(--color-bg-3);
+    width: 50%;
+    height: 0.5em;
+    position: absolute;
+    top: 0;
+    margin-left: 10px;
+    opacity: 0.5;
+  }
+}

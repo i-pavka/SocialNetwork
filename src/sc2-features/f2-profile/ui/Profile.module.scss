@@ -5,22 +5,21 @@
   color: var(--color-heading-1);
   word-wrap: break-word;
   padding: 10px;
+  .mainItem {
+    display: flex;
+    justify-content: space-around;
+  }
   .editBlock {
     margin: 0 auto;
     .buttonEdit {
       padding: 5px 15px;
     }
   }
-  .mainItem {
-    display: flex;
-    justify-content: space-around;
-  }
   .infoBlock {
     display: flex;
     flex-direction: column;
-    .aboutMe {
-      display: flex;
-      flex-direction: column;
+    width: 100%;
+    .infoBlockItem {
       text-align: center;
     }
   }
