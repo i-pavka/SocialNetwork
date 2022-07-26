@@ -1,4 +1,4 @@
-import {instance} from "./instance";
+import {instance, instanceBobuk} from "./instance";
 import {EditProfileFormType} from "../../sc2-features/f2-profile/ui/EditProfileData/EditProfileData";
 
 export const profileAPI = {
@@ -10,8 +10,9 @@ export const profileAPI = {
     return instance.get(`profile/status/${profileId}`)
       .then(res => res.data)
   },
-  changeProfileStatus(status: string) {
-    return instance.put(`profile/status`, {status})
+  changeProfileStatus(status: string, isMain: boolean = true) {
+    const finalInstance = isMain ? instance : instanceBobuk // for development
+    return finalInstance.put(`profile/status`, {status})
       .then(res => res.data)
   },
   setProfilePhoto(photoFile: FormData) {

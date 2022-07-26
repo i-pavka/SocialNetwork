@@ -6,6 +6,7 @@ import {saveState} from "../../../sc3-utils/localstorage";
 import {setHeaderLogoAC} from "../../f1-auth/Login/bll/authReducer";
 import {EditProfileFormType} from "../ui/EditProfileData/EditProfileData";
 import {makeErrorObject} from "../../../sc3-utils/handleError";
+import {apiConfig} from "../../../sc3-utils/config";
 
 export type PostsType = {
   id: string
@@ -116,9 +117,10 @@ export const getProfileStatusTC = (userId: string = ''): AppThunkType => (dispat
     }).finally(() => dispatch(toggleAppLoadingAC(false)));
 };
 
-export const changeProfileStatusTC = (status: string): AppThunkType => (dispatch) => {
+export const changeProfileStatusTC = (status: string): AppThunkType => (dispatch, getState) => {
   dispatch(toggleProfileLoadingAC(true));
-  profileAPI.changeProfileStatus(status)
+  const id = getState().auth.userID;  // for development
+  profileAPI.changeProfileStatus(status, String(id) === apiConfig.AUTH_ID)
     .then(res => {
       dispatch(setProfileStatusAC(status));
     })

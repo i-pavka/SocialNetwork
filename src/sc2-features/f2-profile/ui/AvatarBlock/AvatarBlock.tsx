@@ -79,7 +79,7 @@ export const AvatarBlock: React.FC<AvatarBlockPropsType> = ({urlID}) => {
         <p>Status:</p>
         <div className={s.statusBlock}>
           <h2>{editMode ? null : status}</h2>
-          {editMode ? <InputText value={statusValue} onChangeText={setStatusValue}/> : null}
+          {editMode ? <InputText value={statusValue ? statusValue : ''} onChangeText={setStatusValue}/> : null}
           {(String(userId) === urlID) && <Button onClick={editModeHandler}
                              isSpinner={isLoadingProfile}
                              className={s.buttonChange}>edit status</Button>}

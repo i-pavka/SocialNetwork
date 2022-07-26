@@ -4,11 +4,12 @@ import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import {AppActionType, appReducer} from "./appReducer";
 import {AuthActionType, authReducer} from "../../sc2-features/f1-auth/Login/bll/authReducer";
 import {ProfileActionType, profileReducer} from "../../sc2-features/f2-profile/bll/profileReducer";
+import {UsersActionType, usersReducer} from "../../sc2-features/f5-users/bll/usersReducer";
 
 
 export type AppStateType = ReturnType<typeof rootReducer>;
 export type RootActionsType = | AuthActionType
-  | AppActionType | ProfileActionType;
+  | AppActionType | ProfileActionType | UsersActionType;
 
 export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType, AppStateType, unknown, RootActionsType>;
 export type AppDispatchType = ThunkDispatch<AppStateType, unknown, RootActionsType>;
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   app: appReducer,
   auth: authReducer,
   profile: profileReducer,
+  users: usersReducer,
 });
 
 // Custom `useDispatch` and `useSelector: Use throughout app instead of plain `useDispatch` and `useSelector`

@@ -1,0 +1,22 @@
+.userMainBlock {
+  display: flex;
+  text-align: center;
+  .userWrapper {
+    width: 150px;
+
+    .userPhoto {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 1px solid black;
+    }
+
+    .userName {
+
+    }
+  }
+}
+
+
+
+

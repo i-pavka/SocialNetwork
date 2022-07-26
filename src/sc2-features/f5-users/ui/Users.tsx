@@ -1,29 +1,37 @@
-import React from 'react';
+import React, {useEffect, useId} from 'react';
 import s from './Users.module.scss';
-import { SiProbot } from "react-icons/si";
-import {NavLink} from "react-router-dom";
+import {MainSpinner} from "../../../sc1-main/m1-ui/common/components/MainSpinner/MainSpinner";
+import {useAppDispatch, useAppSelector} from "../../../sc1-main/m2-bll/store";
+import {getUsersDataTC} from "../bll/usersReducer";
+import {User} from "../User/User";
+
 
 
 export const Users = () => {
+
+  const dispatch = useAppDispatch();
+  const keyId = useId();
+
+  const isLoading = useAppSelector(state => state.app.appIsLoading);
+  const users = useAppSelector(state => state.users.users);
+
+  useEffect(() => {
+    dispatch(getUsersDataTC());
+  }, [dispatch]);
+
+
+  if (isLoading) {
+    return <MainSpinner/>
+  }
+
   return (
     <div className={s.usersMain}>
-      <h1>Users</h1>
-      <SiProbot className={s.iconStyle}/>
-      <p>
-        <NavLink to={`/profile/2`}>USER_2</NavLink>
-      </p>
-      <p>
-        <NavLink to={`/profile/22`}>USER_22</NavLink>
-      </p>
-      <p>
-        <NavLink to={`/profile/25`}>USER_25</NavLink>
-      </p>
-      <p>
-        <NavLink to={`/profile/15`}>USER_15</NavLink>
-      </p>
-      <p>
-        <NavLink to={`/profile/23216`}>USER_23216</NavLink>
-      </p>
+        {users.map((el, index) => {
+          return (
+            <User key={`${keyId}-${index.toString()}`}
+                  users={el}/>
+          )
+        })}
     </div>
   );
 };
