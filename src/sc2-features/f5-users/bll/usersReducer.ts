@@ -33,6 +33,7 @@ export const usersReducer = (
     case "users/SET-USERS-DATA":
     case "users/SET-TOTAL-USERS-COUNT":
     case "users/SET-CURRENT-PAGE":
+    case "users/SET-PAGE-SIZE":
       return {...state, ...action.payload};
     default:
       return state
@@ -42,6 +43,7 @@ export const usersReducer = (
 export type UsersActionType = ReturnType<typeof setUsersDataAC>
 | ReturnType<typeof setTotalUserCountAC>
 | ReturnType<typeof setCurrentPageAC>
+| ReturnType<typeof setPageSizeAC>
 
 
 export const setUsersDataAC = (users: UsersItemType[]) => (
@@ -50,6 +52,8 @@ export const setTotalUserCountAC = (totalCount: number) => (
   {type: "users/SET-TOTAL-USERS-COUNT", payload: {totalCount}} as const);
 export const setCurrentPageAC = (currentPage: number) => (
   {type: "users/SET-CURRENT-PAGE", payload: {currentPage}} as const);
+export const setPageSizeAC = (pageSize: number) => (
+  {type: "users/SET-PAGE-SIZE", payload: {pageSize}} as const);
 
 
 export const getUsersDataTC = (userName: string = ''): AppThunkType => (dispatch, getState) => {
