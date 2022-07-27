@@ -1,4 +1,4 @@
-import {uId} from "../../../sc3-utils/uid";
+import {utilityFunctions} from "../../../sc3-utils/utilityFunctions";
 import {AppThunkType} from "../../../sc1-main/m2-bll/store";
 import {toggleAppLoadingAC} from "../../../sc1-main/m2-bll/appReducer";
 import {profileAPI} from "../../../sc1-main/m3-dal/profile-api";
@@ -38,9 +38,9 @@ export type ProfileType = {
 
 const initialState = {
   posts: [
-    {id: uId(), message: "Hello! Hello! Hello!", likesCount: 1},
-    {id: uId(), message: "Yep!", likesCount: 5},
-    {id: uId(), message: "Bay!", likesCount: 10},
+    {id: utilityFunctions(), message: "Hello! Hello! Hello!", likesCount: 1},
+    {id: utilityFunctions(), message: "Yep!", likesCount: 5},
+    {id: utilityFunctions(), message: "Bay!", likesCount: 10},
   ] as PostsType[],
   profile: {} as ProfileType,
   isLoadingProfile: false,

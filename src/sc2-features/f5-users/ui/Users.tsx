@@ -3,9 +3,12 @@ import s from './Users.module.scss';
 import {MainSpinner} from "../../../sc1-main/m1-ui/common/components/MainSpinner/MainSpinner";
 import {useAppDispatch, useAppSelector} from "../../../sc1-main/m2-bll/store";
 import {getUsersDataTC, setCurrentPageAC, setPageSizeAC} from "../bll/usersReducer";
-import {User} from "./User/User";
 import {Paginator} from "./Paginator/Paginator";
 import {SuperSelect} from "../../../sc1-main/m1-ui/common/components/SuperSelect/SuperSelect";
+import {Button} from "../../../sc1-main/m1-ui/common/components/Button/Button";
+import {scrollTop} from "../../../sc3-utils/utilityFunctions";
+import {User} from "./User/User";
+import {InputText} from "../../../sc1-main/m1-ui/common/components/InputText/InputText";
 
 
 export const Users = () => {
@@ -27,13 +30,19 @@ export const Users = () => {
 
   const changeQuantityOfUsersHandler = (quantity: number) => {
     dispatch(setPageSizeAC(quantity));
+    scrollTop();
   }
 
   if (isLoading) {
     return <MainSpinner/>
   }
+
   return (
     <section className={s.usersBlock}>
+      <div className={s.searchBlock}>
+        <InputText/>
+        <Button className={s.buttonSearch}>search</Button>
+      </div>
       <div className={s.usersMain}>
         {users.map((el, index) => {
           return (
@@ -43,6 +52,7 @@ export const Users = () => {
         })}
       </div>
       <div className={s.usersPagination}>
+        <Button onClick={() => scrollTop()}>&#11014; top</Button>
         <Paginator currentPage={currentPage}
                    totalCount={totalCount}
                    pageSize={pageSize}
@@ -54,7 +64,6 @@ export const Users = () => {
                      onChangeOption={changeQuantityOfUsersHandler}
         />
       </div>
-
     </section>
   );
 };

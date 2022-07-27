@@ -5,7 +5,7 @@ import React, {
 } from 'react';
 
 import s from './InputTextarea.module.css';
-import {uId} from "../../../../../sc3-utils/uid";
+import {utilityFunctions} from "../../../../../sc3-utils/utilityFunctions";
 
 type DefaultTextareaPropsType = DetailedHTMLProps<TextareaHTMLAttributes<HTMLTextAreaElement>,
   HTMLTextAreaElement>;
@@ -23,7 +23,7 @@ export const InputTextarea: React.FC<PropsType> = (
     ...restProps
   }
 ) => {
-  const id = uId();
+  const id = utilityFunctions();
 
   const onChangeCallback = (e: ChangeEvent<HTMLTextAreaElement>): void => {
     onChange?.(e);

@@ -2,6 +2,12 @@
   display: flex;
   flex-direction: column;
   padding: 10px 5px 10px 5px;
+  .searchBlock {
+    margin: 0 auto 20px;
+    .buttonSearch {
+      padding: 8px 10px;
+    }
+  }
   .usersMain {
     display: flex;
     flex-wrap: wrap;
@@ -9,7 +15,7 @@
   }
   .usersPagination {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
   }
 }

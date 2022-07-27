@@ -3,24 +3,25 @@ import {NavLink} from "react-router-dom";
 import s from './User.module.scss'
 import defaultAva from "../../../../assets/img/small_ava.jpg";
 import {Button} from "../../../../sc1-main/m1-ui/common/components/Button/Button";
-import {UsersItemType} from "../../bll/usersReducer";
+import {followOrUnfollowTC, UsersItemType} from "../../bll/usersReducer";
+import {useAppDispatch, useAppSelector} from "../../../../sc1-main/m2-bll/store";
 
 
 type UserPropsType = {
   users: UsersItemType
 }
 
-export const User: React.FC<UserPropsType> = (
-  {
-    users,
-  }
-) => {
+export const User: React.FC<UserPropsType> = ({users}) => {
+
+  const dispatch = useAppDispatch();
+  const isAuth = useAppSelector(state => state.auth.isAuth);
+  const isLoading = useAppSelector(state => state.users.isLoadingUsers);
 
   const followHandler = () => {
-    console.log('Follow');
+    dispatch(followOrUnfollowTC(users.id, 'follow'));
   }
   const unfollowHandler = () => {
-    console.log('Unfollow');
+    dispatch(followOrUnfollowTC(users.id, 'unfollow'));
   }
 
   return (
@@ -31,12 +32,12 @@ export const User: React.FC<UserPropsType> = (
                src={users.photos.small ? users.photos.small : defaultAva}
                alt="user-ava"/>
         </NavLink>
-        <Button onClick={users.followed ? followHandler : unfollowHandler}
-                color={'other'}
-                className={s.buttonFollow}
-        >
+        {isAuth && <Button onClick={users.followed ? unfollowHandler : followHandler}
+                           color={'other'}
+                           disabled={isLoading}
+                           className={s.buttonFollow}>
           {users.followed ? 'Unfollow' : 'Follow'}
-        </Button>
+        </Button>}
         <div className={s.userName}>
           <p>{users.name}</p>
         </div>

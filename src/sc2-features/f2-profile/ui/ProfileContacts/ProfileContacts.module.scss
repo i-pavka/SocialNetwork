@@ -9,8 +9,13 @@
         color: var(--color-heading-2);
         width: 120px;
       }
-      .itemLink:hover {
-        text-decoration: underline;
+      .itemLink {
+        display: flex;
+        word-break: break-all;
+        text-align: center;
+                &:hover {
+          text-decoration: underline;
+        }
       }
     }
   }
