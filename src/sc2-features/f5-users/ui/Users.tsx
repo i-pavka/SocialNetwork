@@ -2,9 +2,9 @@ import React, {useEffect, useId} from 'react';
 import s from './Users.module.scss';
 import {MainSpinner} from "../../../sc1-main/m1-ui/common/components/MainSpinner/MainSpinner";
 import {useAppDispatch, useAppSelector} from "../../../sc1-main/m2-bll/store";
-import {getUsersDataTC} from "../bll/usersReducer";
-import {User} from "../User/User";
-
+import {getUsersDataTC, setCurrentPageAC} from "../bll/usersReducer";
+import {User} from "./User/User";
+import {Paginator} from "./Paginator/Paginator";
 
 
 export const Users = () => {
@@ -14,10 +14,15 @@ export const Users = () => {
 
   const isLoading = useAppSelector(state => state.app.appIsLoading);
   const users = useAppSelector(state => state.users.users);
+  const {currentPage, totalCount, pageSize} = useAppSelector(state => state.users);
 
   useEffect(() => {
     dispatch(getUsersDataTC());
-  }, [dispatch]);
+  }, [dispatch, currentPage]);
+
+  const changePageHandler = (page: number) => {
+    dispatch(setCurrentPageAC(page));
+  }
 
 
   if (isLoading) {
@@ -25,13 +30,21 @@ export const Users = () => {
   }
 
   return (
-    <div className={s.usersMain}>
+    <section className={s.usersBlock}>
+      <div className={s.usersMain}>
         {users.map((el, index) => {
           return (
             <User key={`${keyId}-${index.toString()}`}
                   users={el}/>
           )
         })}
-    </div>
+      </div>
+      <Paginator currentPage={currentPage}
+                 totalCount={totalCount}
+                 pageSize={pageSize}
+                 siblingCount={2}
+                 onPageChange={changePageHandler}
+      />
+    </section>
   );
 };

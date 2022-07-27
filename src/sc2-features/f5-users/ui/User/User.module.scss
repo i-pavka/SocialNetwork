@@ -1,6 +1,8 @@
 .userMainBlock {
   display: flex;
   text-align: center;
+  word-wrap: break-word;
+  margin: 0 auto;
   .userWrapper {
     width: 150px;
 
@@ -9,6 +11,9 @@
       height: 100px;
       border-radius: 50%;
       border: 1px solid black;
+    }
+    .buttonFollow {
+      padding: 3px 10px;
     }
 
     .userName {

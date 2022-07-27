@@ -1,9 +1,9 @@
 import React from 'react';
-import {UsersItemType} from "../bll/usersReducer";
 import {NavLink} from "react-router-dom";
-import {Button} from "../../../sc1-main/m1-ui/common/components/Button/Button";
 import s from './User.module.scss'
-import defaultAva from "../../../assets/img/small_ava.jpg";
+import defaultAva from "../../../../assets/img/small_ava.jpg";
+import {Button} from "../../../../sc1-main/m1-ui/common/components/Button/Button";
+import {UsersItemType} from "../../bll/usersReducer";
 
 
 type UserPropsType = {
@@ -31,12 +31,15 @@ export const User: React.FC<UserPropsType> = (
                src={users.photos.small ? users.photos.small : defaultAva}
                alt="user-ava"/>
         </NavLink>
+        <Button onClick={users.followed ? followHandler : unfollowHandler}
+                color={'other'}
+                className={s.buttonFollow}
+        >
+          {users.followed ? 'Unfollow' : 'Follow'}
+        </Button>
         <div className={s.userName}>
           <p>{users.name}</p>
         </div>
-        <Button onClick={users.followed ? followHandler : unfollowHandler}>
-          {users.followed ? 'Unfollow' : 'Follow'}
-        </Button>
       </div>
     </div>
   );

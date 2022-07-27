@@ -10,7 +10,7 @@ type ButtonLoadPropsType = DefaultButtonPropsType & {
 const colors: { [Key in C]: string } = {
   default: '#00ed64',
   delete: '#ef0c0c',
-  other: '#023430',
+  other: '#034844',
 }
 export const Button: React.FC<ButtonLoadPropsType> = (
   {

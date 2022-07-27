@@ -1,5 +1,12 @@
-.usersMain {
+.usersBlock {
   display: flex;
-  flex-wrap: wrap;
-  padding: 5px;
+  flex-direction: column;
+  padding: 10px 5px 10px 5px;
+  .usersMain {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+  }
 }
+
+
