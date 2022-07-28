@@ -27,7 +27,7 @@ export const User: React.FC<UserPropsType> = ({users}) => {
   return (
     <div className={s.userMainBlock}>
       <div className={s.userWrapper}>
-        <NavLink to={`/profile/${users.id}`}>
+        <NavLink to={`/profile/${users.id}`} target='_blank'>
           <img className={s.userPhoto}
                src={users.photos.small ? users.photos.small : defaultAva}
                alt="user-ava"/>

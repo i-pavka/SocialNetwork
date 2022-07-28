@@ -1,0 +1,14 @@
+.searchBlock {
+  display: flex;
+  min-height: 68px;
+  min-width: 350px;
+  margin: 0 auto 20px;
+  .inputSearch {
+    display: flex;
+    flex-direction: column;
+  }
+  .buttonSearch {
+    margin: 5px 0 5px 2px;
+    padding: 8px 10px;
+  }
+}

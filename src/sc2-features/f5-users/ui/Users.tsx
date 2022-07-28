@@ -1,4 +1,4 @@
-import React, {useEffect, useId} from 'react';
+import React, {useEffect, useId, useState} from 'react';
 import s from './Users.module.scss';
 import {MainSpinner} from "../../../sc1-main/m1-ui/common/components/MainSpinner/MainSpinner";
 import {useAppDispatch, useAppSelector} from "../../../sc1-main/m2-bll/store";
@@ -8,7 +8,7 @@ import {SuperSelect} from "../../../sc1-main/m1-ui/common/components/SuperSelect
 import {Button} from "../../../sc1-main/m1-ui/common/components/Button/Button";
 import {scrollTop} from "../../../sc3-utils/utilityFunctions";
 import {User} from "./User/User";
-import {InputText} from "../../../sc1-main/m1-ui/common/components/InputText/InputText";
+import {SearchUsers} from "./SearchUsers/SearchUsers";
 
 
 export const Users = () => {
@@ -16,12 +16,13 @@ export const Users = () => {
   const dispatch = useAppDispatch();
   const keyId = useId();
 
+  const [search, setSearch] = useState('');
   const isLoading = useAppSelector(state => state.app.appIsLoading);
   const users = useAppSelector(state => state.users.users);
   const {currentPage, totalCount, pageSize} = useAppSelector(state => state.users);
 
   useEffect(() => {
-    dispatch(getUsersDataTC());
+    dispatch(getUsersDataTC(search));
   }, [dispatch, currentPage, pageSize]);
 
   const changePageHandler = (page: number) => {
@@ -39,10 +40,8 @@ export const Users = () => {
 
   return (
     <section className={s.usersBlock}>
-      <div className={s.searchBlock}>
-        <InputText/>
-        <Button className={s.buttonSearch}>search</Button>
-      </div>
+      <SearchUsers search={search}
+                   setSearch={setSearch}/>
       <div className={s.usersMain}>
         {users.map((el, index) => {
           return (
@@ -57,12 +56,10 @@ export const Users = () => {
                    totalCount={totalCount}
                    pageSize={pageSize}
                    siblingCount={2}
-                   onPageChange={changePageHandler}
-        />
+                   onPageChange={changePageHandler}/>
         <SuperSelect options={[15, 25, 50, 100]}
                      value={pageSize}
-                     onChangeOption={changeQuantityOfUsersHandler}
-        />
+                     onChangeOption={changeQuantityOfUsersHandler}/>
       </div>
     </section>
   );
