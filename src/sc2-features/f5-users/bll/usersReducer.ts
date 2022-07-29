@@ -69,10 +69,10 @@ export const changeFollowOrUnfollowAC = (userId: number, isFollow: boolean) =>
   ({type: "users/CHANGE-FOLLOW-OR-UNFOLLOW", payload: {userId, isFollow}} as const);
 
 
-export const getUsersDataTC = (userName: string = ''): AppThunkType => (dispatch, getState) => {
+export const getUsersDataTC = (userName: string = '', isFriends: boolean = false): AppThunkType => (dispatch, getState) => {
   dispatch(toggleAppLoadingAC(true));
   const {currentPage, pageSize} = getState().users;
-  usersAPI.getUsers(currentPage, pageSize, userName)
+  usersAPI.getUsers(currentPage, pageSize, userName, isFriends)
     .then(res => {
       if (!res.error) {
         dispatch(setUsersDataAC(res.items));

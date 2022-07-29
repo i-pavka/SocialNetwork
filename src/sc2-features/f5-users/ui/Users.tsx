@@ -9,6 +9,7 @@ import {Button} from "../../../sc1-main/m1-ui/common/components/Button/Button";
 import {scrollTop} from "../../../sc3-utils/utilityFunctions";
 import {User} from "./User/User";
 import {SearchUsers} from "./SearchUsers/SearchUsers";
+import {useLocation, useSearchParams} from "react-router-dom";
 
 
 export const Users = () => {
@@ -16,14 +17,23 @@ export const Users = () => {
   const dispatch = useAppDispatch();
   const keyId = useId();
 
+  const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const [search, setSearch] = useState('');
   const isLoading = useAppSelector(state => state.app.appIsLoading);
   const users = useAppSelector(state => state.users.users);
   const {currentPage, totalCount, pageSize} = useAppSelector(state => state.users);
 
   useEffect(() => {
+    setSearchParams({page: String(currentPage)})
     dispatch(getUsersDataTC(search));
   }, [dispatch, currentPage, pageSize]);
+
+  useEffect(() => {
+    const pageNumber = location.search.replace(/\D/g, '');
+    if(pageNumber && pageNumber !== '0') dispatch(setCurrentPageAC(Number(pageNumber)));
+  }, [searchParams])
 
   const changePageHandler = (page: number) => {
     dispatch(setCurrentPageAC(page));
