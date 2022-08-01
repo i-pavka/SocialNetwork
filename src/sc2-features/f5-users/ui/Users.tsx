@@ -26,13 +26,20 @@ export const Users = () => {
   const {currentPage, totalCount, pageSize} = useAppSelector(state => state.users);
 
   useEffect(() => {
-    setSearchParams({page: String(currentPage)})
+    setSearchParams({page: String(currentPage)});
     dispatch(getUsersDataTC(search));
   }, [dispatch, currentPage, pageSize]);
 
   useEffect(() => {
+    return () => {
+      dispatch(setCurrentPageAC(1));
+      console.log("useEffect пустой")
+    }
+  }, []);
+
+  useEffect(() => {
     const pageNumber = location.search.replace(/\D/g, '');
-    if(pageNumber && pageNumber !== '0') dispatch(setCurrentPageAC(Number(pageNumber)));
+    if (pageNumber && pageNumber !== '0') dispatch(setCurrentPageAC(Number(pageNumber)));
   }, [searchParams])
 
   const changePageHandler = (page: number) => {

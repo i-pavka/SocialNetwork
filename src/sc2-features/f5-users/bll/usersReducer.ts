@@ -39,20 +39,22 @@ export const usersReducer = (
     case "users/TOGGLE-USERS-LOADING":
       return {...state, ...action.payload};
     case "users/CHANGE-FOLLOW-OR-UNFOLLOW":
-      return {...state,
+      return {
+        ...state,
         users: state.users
-          .map(user => user.id === action.payload.userId ? {...user, followed: action.payload.isFollow} : user)}
+          .map(user => user.id === action.payload.userId ? {...user, followed: action.payload.isFollow} : user)
+      }
     default:
       return state
   }
 }
 
 export type UsersActionType = ReturnType<typeof setUsersDataAC>
-| ReturnType<typeof setTotalUserCountAC>
-| ReturnType<typeof setCurrentPageAC>
-| ReturnType<typeof setPageSizeAC>
-| ReturnType<typeof toggleUsersLoadingAC>
-| ReturnType<typeof changeFollowOrUnfollowAC>
+  | ReturnType<typeof setTotalUserCountAC>
+  | ReturnType<typeof setCurrentPageAC>
+  | ReturnType<typeof setPageSizeAC>
+  | ReturnType<typeof toggleUsersLoadingAC>
+  | ReturnType<typeof changeFollowOrUnfollowAC>
 
 
 export const setUsersDataAC = (users: UsersItemType[]) => (
@@ -69,12 +71,17 @@ export const changeFollowOrUnfollowAC = (userId: number, isFollow: boolean) =>
   ({type: "users/CHANGE-FOLLOW-OR-UNFOLLOW", payload: {userId, isFollow}} as const);
 
 
-export const getUsersDataTC = (userName: string = '', isFriends: boolean = false): AppThunkType => (dispatch, getState) => {
+export const getUsersDataTC = (
+  userName: string = '', isFriends: boolean | null = null,
+  currentPageTC: number = 1,
+): AppThunkType => (dispatch, getState) => {
   dispatch(toggleAppLoadingAC(true));
   const {currentPage, pageSize} = getState().users;
   usersAPI.getUsers(currentPage, pageSize, userName, isFriends)
     .then(res => {
       if (!res.error) {
+        // dispatch(setCurrentPageAC(currentPage));
+
         dispatch(setUsersDataAC(res.items));
         dispatch(setTotalUserCountAC(res.totalCount));
       }
@@ -92,7 +99,6 @@ export const followOrUnfollowTC = (userId: number, action: FollowType): AppThunk
   dispatch(toggleUsersLoadingAC(true));
   followingAPI.userFollow(userId, action)
     .then(res => {
-      console.log(res);
       if (res.dataResponse.resultCode === 0) {
         dispatch(changeFollowOrUnfollowAC(userId, res.isFollow));
       }
