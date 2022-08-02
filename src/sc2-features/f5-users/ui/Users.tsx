@@ -1,4 +1,4 @@
-import React, {useEffect, useId, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import s from './Users.module.scss';
 import {MainSpinner} from "../../../sc1-main/m1-ui/common/components/MainSpinner/MainSpinner";
 import {useAppDispatch, useAppSelector} from "../../../sc1-main/m2-bll/store";
@@ -15,14 +15,12 @@ import {useLocation, useSearchParams} from "react-router-dom";
 export const Users = () => {
 
   const dispatch = useAppDispatch();
-  const keyId = useId();
 
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [search, setSearch] = useState('');
   const isLoading = useAppSelector(state => state.app.appIsLoading);
-  const users = useAppSelector(state => state.users.users);
   const {currentPage, totalCount, pageSize} = useAppSelector(state => state.users);
 
   useEffect(() => {
@@ -60,12 +58,7 @@ export const Users = () => {
       <SearchUsers search={search}
                    setSearch={setSearch}/>
       <div className={s.usersMain}>
-        {users.map((el, index) => {
-          return (
-            <User key={`${keyId}-${index.toString()}`}
-                  users={el}/>
-          )
-        })}
+        <User/>
       </div>
       <div className={s.usersPagination}>
         <Button onClick={() => scrollTop()}>&#11014; top</Button>
@@ -78,6 +71,7 @@ export const Users = () => {
                      value={pageSize}
                      onChangeOption={changeQuantityOfUsersHandler}/>
       </div>
+      <div className={s.totalUsers}>Total users: {totalCount}</div>
     </section>
   );
 };

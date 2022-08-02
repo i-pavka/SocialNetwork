@@ -1,16 +1,23 @@
-.usersBlock {
+.usersBlock,
+.usersMain,
+.totalUsers,
+.usersPagination {
   display: flex;
+}
+
+.usersBlock {
   flex-direction: column;
   padding: 10px 5px 10px 5px;
   .usersMain {
-    display: flex;
     flex-wrap: wrap;
     width: 100%;
   }
   .usersPagination {
-    display: flex;
     justify-content: space-around;
     align-items: center;
+  }
+  .totalUsers {
+    margin: 0 auto;
   }
 }
 

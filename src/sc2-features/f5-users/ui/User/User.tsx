@@ -2,46 +2,30 @@ import React from 'react';
 import {NavLink} from "react-router-dom";
 import s from './User.module.scss'
 import defaultAva from "../../../../assets/img/small_ava.jpg";
-import {Button} from "../../../../sc1-main/m1-ui/common/components/Button/Button";
-import {followOrUnfollowTC, UsersItemType} from "../../bll/usersReducer";
-import {useAppDispatch, useAppSelector} from "../../../../sc1-main/m2-bll/store";
+import {useAppSelector} from "../../../../sc1-main/m2-bll/store";
+import {FollowUnfollow} from "../../../../sc1-main/m1-ui/common/components/FollowUnfollow/FollowUnfollow";
 
 
-type UserPropsType = {
-  users: UsersItemType
-}
+export const User = () => {
 
-export const User: React.FC<UserPropsType> = ({users}) => {
-
-  const dispatch = useAppDispatch();
   const isAuth = useAppSelector(state => state.auth.isAuth);
-  const isLoading = useAppSelector(state => state.users.isLoadingUsers);
+  const users = useAppSelector(state => state.users.users);
 
-  const followHandler = () => {
-    dispatch(followOrUnfollowTC(users.id, 'follow'));
-  }
-  const unfollowHandler = () => {
-    dispatch(followOrUnfollowTC(users.id, 'unfollow'));
-  }
-
-  return (
-    <div className={s.userMainBlock}>
-      <div className={s.userWrapper}>
-        <NavLink to={`/profile/${users.id}`} target='_blank'>
-          <img className={s.userPhoto}
-               src={users.photos.small ? users.photos.small : defaultAva}
-               alt="user-ava"/>
-        </NavLink>
-        {isAuth && <Button onClick={users.followed ? unfollowHandler : followHandler}
-                           color={'other'}
-                           disabled={isLoading}
-                           className={s.buttonFollow}>
-          {users.followed ? 'Unfollow' : 'Follow'}
-        </Button>}
-        <div className={s.userName}>
-          <p>{users.name}</p>
+  return (<>
+    {users.map(user => {
+      return <div key={user.id} className={s.userMainBlock}>
+        <div className={s.userWrapper}>
+          <NavLink to={`/profile/${user.id}`} target='_blank'>
+            <img className={s.userPhoto}
+                 src={user.photos.small ? user.photos.small : defaultAva}
+                 alt="user-ava"/>
+          </NavLink>
+          {isAuth && <FollowUnfollow friend={user} customStyle={s.buttonFollow}/>}
+          <div className={s.userName}>
+            <p>{user.name}</p>
+          </div>
         </div>
       </div>
-    </div>
-  );
+    })}
+  </>);
 };
