@@ -2,6 +2,7 @@ import {usersAPI} from "../../../sc1-main/m3-dal/users-api";
 import {AppThunkType} from "../../../sc1-main/m2-bll/store";
 import {setAppErrorAC, toggleAppLoadingAC} from "../../../sc1-main/m2-bll/appReducer";
 import {followingAPI} from "../../../sc1-main/m3-dal/following-api";
+import {apiConfig} from "../../../sc3-utils/config";
 
 
 export type UsersItemType = {
@@ -73,15 +74,12 @@ export const changeFollowOrUnfollowAC = (userId: number, isFollow: boolean) =>
 
 export const getUsersDataTC = (
   userName: string = '', isFriends: boolean | null = null,
-  currentPageTC: number = 1,
 ): AppThunkType => (dispatch, getState) => {
   dispatch(toggleAppLoadingAC(true));
   const {currentPage, pageSize} = getState().users;
   usersAPI.getUsers(currentPage, pageSize, userName, isFriends)
     .then(res => {
       if (!res.error) {
-        // dispatch(setCurrentPageAC(currentPage));
-
         dispatch(setUsersDataAC(res.items));
         dispatch(setTotalUserCountAC(res.totalCount));
       }
@@ -95,9 +93,13 @@ export const getUsersDataTC = (
     }).finally(() => dispatch(toggleAppLoadingAC(false)));
 };
 
-export const followOrUnfollowTC = (userId: number, action: FollowType): AppThunkType => (dispatch) => {
+export const followOrUnfollowTC = (
+  userId: number,
+  action: FollowType
+): AppThunkType => (dispatch, getState) => {
   dispatch(toggleUsersLoadingAC(true));
-  followingAPI.userFollow(userId, action)
+  const id = getState().auth.userID;  // for development
+  followingAPI.userFollow(userId, action, String(id) === apiConfig.AUTH_ID)
     .then(res => {
       if (res.dataResponse.resultCode === 0) {
         dispatch(changeFollowOrUnfollowAC(userId, res.isFollow));

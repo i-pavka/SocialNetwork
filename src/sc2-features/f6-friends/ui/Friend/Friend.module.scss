@@ -1,0 +1,56 @@
+.friend,
+.infoBlock,
+.friendsList {
+  display: flex;
+}
+
+.infoBlock,
+.friendsList {
+  flex-direction: column;
+}
+
+.friendsList {
+  width: 60%;
+  justify-content: center;
+  align-items: center;
+  margin: 5px auto;
+  &:after {
+    content: '';
+    border-bottom: 1px solid var(--color-bg-3);
+    width: 80%;
+    height: 1px;
+    opacity: 0.5;
+  }
+
+  .friend {
+    width: 100%;
+    justify-content: space-evenly;
+    .avaBlock {
+      margin: 0 5px 5px 0;
+      .userPhoto {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        border: 1px solid black;
+      }
+    }
+    .infoBlock {
+      align-items: center;
+      max-width: 200px;
+      word-break: break-word;
+      & p {
+        padding: 0;
+        margin: 5px;
+      }
+    }
+  }
+  .buttonBlock {
+    .buttonFollow {
+      min-width: 80px;
+    }
+    & button {
+      padding: 5px;
+      margin: 5px;
+    }
+  }
+}

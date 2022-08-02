@@ -33,9 +33,9 @@ export const Users = () => {
   useEffect(() => {
     return () => {
       dispatch(setCurrentPageAC(1));
-      console.log("useEffect пустой")
+      dispatch(setPageSizeAC(15));
     }
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     const pageNumber = location.search.replace(/\D/g, '');

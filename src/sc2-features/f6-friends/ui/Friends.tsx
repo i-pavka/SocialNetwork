@@ -1,14 +1,12 @@
 import React, {useEffect} from 'react';
 import s from './Friends.module.scss';
-import {followOrUnfollowTC, getUsersDataTC, setCurrentPageAC, setPageSizeAC} from "../../f5-users/bll/usersReducer";
+import {getUsersDataTC, setCurrentPageAC, setPageSizeAC} from "../../f5-users/bll/usersReducer";
 import {useAppDispatch, useAppSelector} from "../../../sc1-main/m2-bll/store";
 import {MainSpinner} from "../../../sc1-main/m1-ui/common/components/MainSpinner/MainSpinner";
-import defaultAva from "../../../assets/img/small_ava.jpg";
-import {Button} from "../../../sc1-main/m1-ui/common/components/Button/Button";
 import {Paginator} from "../../f5-users/ui/Paginator/Paginator";
 import {SuperSelect} from "../../../sc1-main/m1-ui/common/components/SuperSelect/SuperSelect";
-import {useLocation, useSearchParams, NavLink} from "react-router-dom";
-
+import {useLocation, useSearchParams} from "react-router-dom";
+import {Friend} from "./Friend/Friend";
 
 
 export const Friends = () => {
@@ -31,12 +29,12 @@ export const Friends = () => {
     if (pageNumber && pageNumber !== '0') dispatch(setCurrentPageAC(Number(pageNumber)));
   }, [searchParams])
 
-  const followHandler = (userId: number) => {
-    dispatch(followOrUnfollowTC(userId, 'follow'));
-  }
-  const unfollowHandler = (userId: number) => {
-    dispatch(followOrUnfollowTC(userId, 'unfollow'));
-  }
+  useEffect(() => {
+    return () => {
+      dispatch(setCurrentPageAC(1));
+      dispatch(setPageSizeAC(15));
+    }
+  }, [dispatch]);
 
   const changePageHandler = (page: number) => {
     dispatch(setCurrentPageAC(page));
@@ -51,42 +49,22 @@ export const Friends = () => {
 
   return (
     <div className={s.friendsMain}>
-      {users.map(friend => {
-        return <div key={friend.id} className={s.friendsList}>
-          <div className={s.friend}>
-            <div className={s.avaBlock}>
-              <NavLink to={`/profile/${friend.id}`} target='_blank'>
-                <img className={s.userPhoto}
-                     src={friend.photos.small ? friend.photos.small : defaultAva}
-                     alt="user-ava"/>
-              </NavLink>
-            </div>
-            <div className={s.infoBlock}>
-              <p>{friend.name}</p>
-              <p>{friend.status}</p>
-              <div className={s.buttonBlock}>
-                <Button onClick={() => friend.followed ? unfollowHandler(friend.id) : followHandler(friend.id)}
-                        color={'other'}
-                        disabled={isLoading}
-                        className={s.buttonFollow}>
-                  {friend.followed ? 'Unfollow' : 'Follow'}
-                </Button>
-                <Button>Message</Button>
-              </div>
-            </div>
+      {users.length === 0
+        ? <h3>Unfortunately you don't have any friends</h3>
+        : <>
+          <Friend users={users}/>
+          <div className={s.friendPagination}>
+            <Paginator currentPage={currentPage}
+                       totalCount={totalCount}
+                       pageSize={pageSize}
+                       siblingCount={2}
+                       onPageChange={changePageHandler}/>
+            <SuperSelect options={[5, 10, 15, 50]}
+                         value={pageSize}
+                         onChangeOption={changeQuantityOfUsersHandler}/>
           </div>
-        </div>
-      })}
-      <div className={s.friendPagination}>
-        <Paginator currentPage={currentPage}
-                   totalCount={totalCount}
-                   pageSize={pageSize}
-                   siblingCount={2}
-                   onPageChange={changePageHandler}/>
-        <SuperSelect options={[5, 10, 15, 50]}
-                     value={pageSize}
-                     onChangeOption={changeQuantityOfUsersHandler}/>
-      </div>
+        </>
+      }
     </div>
   );
 };
