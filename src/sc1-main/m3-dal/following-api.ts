@@ -13,5 +13,12 @@ export const followingAPI = {
         .then(res => ({dataResponse: res.data, isFollow: false}))
     }
   },
+  checkFollowingStatus(userId: number, isMain: boolean = true) {
+    const finalInstance = isMain ? instance : instanceBobuk // for development
+    return finalInstance.get(`follow/${userId}`)
+      .then(res => {
+        return res.data
+      })
+  }
 }
 

@@ -27,7 +27,7 @@ export const Friend: React.FC<FriendPropsType> = ({users}) => {
             <p>{friend.name}</p>
             <p>{friend.status}</p>
             <div className={s.buttonBlock}>
-              <FollowUnfollow friend={friend} customStyle={s.buttonFollow}/>
+              <FollowUnfollow userId={friend.id} followed={friend.followed} customStyle={s.buttonFollow}/>
               <Button>Message</Button>
             </div>
           </div>

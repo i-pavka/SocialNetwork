@@ -3,6 +3,7 @@ import {AppThunkType} from "../../../sc1-main/m2-bll/store";
 import {setAppErrorAC, toggleAppLoadingAC} from "../../../sc1-main/m2-bll/appReducer";
 import {followingAPI} from "../../../sc1-main/m3-dal/following-api";
 import {apiConfig} from "../../../sc3-utils/config";
+import {toggleIsFollowingProfileAC} from "../../f2-profile/bll/profileReducer";
 
 
 export type UsersItemType = {
@@ -103,6 +104,7 @@ export const followOrUnfollowTC = (
     .then(res => {
       if (res.dataResponse.resultCode === 0) {
         dispatch(changeFollowOrUnfollowAC(userId, res.isFollow));
+        dispatch(toggleIsFollowingProfileAC(res.isFollow));
       }
       dispatch(setAppErrorAC(res.dataResponse.messages[0]));
     })

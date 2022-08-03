@@ -7,6 +7,7 @@ import {setHeaderLogoAC} from "../../f1-auth/Login/bll/authReducer";
 import {EditProfileFormType} from "../ui/EditProfileData/EditProfileData";
 import {makeErrorObject} from "../../../sc3-utils/handleError";
 import {apiConfig} from "../../../sc3-utils/config";
+import {followingAPI} from "../../../sc1-main/m3-dal/following-api";
 
 export type PostsType = {
   id: string
@@ -44,6 +45,7 @@ const initialState = {
   ] as PostsType[],
   profile: {} as ProfileType,
   isLoadingProfile: false,
+  isProfileFollowing: null as boolean | null,
   status: '',
   formError: {} as {[key: string]: string},
 }
@@ -57,6 +59,7 @@ export const profileReducer = (
     case "profile/SET-PROFILE-STATUS":
     case "profile/TOGGLE-PROFILE-LOADING":
     case "profile/SET-FORM-ERROR":
+    case "profile/TOGGLE-IS-FOLLOWING-PROFILE":
       return {...state, ...action.payload}
     case "profile/CHANGE-PROFILE-PHOTO":
       return {...state, profile: {...state.profile, ...action.payload}}
@@ -70,6 +73,7 @@ export type ProfileActionType = ReturnType<typeof setProfileDataAC>
   | ReturnType<typeof toggleProfileLoadingAC>
   | ReturnType<typeof changeProfilePhotoAC>
   | ReturnType<typeof setFormErrorAC>
+  | ReturnType<typeof toggleIsFollowingProfileAC>
 
 // Action creators
 export const setProfileDataAC = (profile: ProfileType) =>
@@ -82,6 +86,8 @@ export const changeProfilePhotoAC = (photos: ProfilePhoto) =>
   ({type: "profile/CHANGE-PROFILE-PHOTO", payload: {photos}} as const);
 export const setFormErrorAC = (formError: {[key: string]: string}) =>
   ({type: "profile/SET-FORM-ERROR", payload: {formError}} as const);
+export const toggleIsFollowingProfileAC = (isProfileFollowing: boolean | null) =>
+  ({type: "profile/TOGGLE-IS-FOLLOWING-PROFILE", payload: {isProfileFollowing}} as const);
 
 // Thunks
 export const getProfileDataTC = (userId: string = ''): AppThunkType => (dispatch, getState) => {
@@ -162,6 +168,21 @@ export const setProfileDataTC = (profileData: EditProfileFormType): AppThunkType
         const finalObject = makeErrorObject(res.messages);
         dispatch(setFormErrorAC(finalObject));
       }
+    })
+    .catch(error => {
+      const errorMessage = error.response
+        ? error.response.data.error
+        : (`${error.message}, more details in the console`);
+      console.log('Error: ', errorMessage);
+    })
+    .finally(() => dispatch(toggleProfileLoadingAC(false)));
+};
+
+export const getIsFollowingProfileTC = (userId: number): AppThunkType => (dispatch) => {
+  dispatch(toggleProfileLoadingAC(true));
+  followingAPI.checkFollowingStatus(userId)
+    .then(res => {
+      dispatch(toggleIsFollowingProfileAC(res));
     })
     .catch(error => {
       const errorMessage = error.response

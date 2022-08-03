@@ -63,7 +63,7 @@ export const AvatarBlock: React.FC<AvatarBlockPropsType> = ({urlID}) => {
       <div className={s.smallAva}>
         <img src={newPhoto ? newPhoto : photos?.small ? photos?.small : defaultAvaSmall} alt="small-ava"/>
         {(String(userId) === urlID) && <UploadAva className={s.editPhoto}
-                              onClick={uploadHandler}/>}
+                                                  onClick={uploadHandler}/>}
       </div>
       {isLoadingProfile
         ? <MiniSpinner/>
@@ -81,8 +81,8 @@ export const AvatarBlock: React.FC<AvatarBlockPropsType> = ({urlID}) => {
           <h2>{editMode ? null : status}</h2>
           {editMode ? <InputText value={statusValue ? statusValue : ''} onChangeText={setStatusValue}/> : null}
           {(String(userId) === urlID) && <Button onClick={editModeHandler}
-                             isSpinner={isLoadingProfile}
-                             className={s.buttonChange}>edit status</Button>}
+                                                 isSpinner={isLoadingProfile}
+                                                 className={s.buttonChange}>edit status</Button>}
         </div>
       </div>
     </div>

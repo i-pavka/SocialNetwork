@@ -20,7 +20,7 @@ export const User = () => {
                  src={user.photos.small ? user.photos.small : defaultAva}
                  alt="user-ava"/>
           </NavLink>
-          {isAuth && <FollowUnfollow friend={user} customStyle={s.buttonFollow}/>}
+          {isAuth && <FollowUnfollow userId={user.id} followed={user.followed} customStyle={s.buttonFollow}/>}
           <div className={s.userName}>
             <p>{user.name}</p>
           </div>
