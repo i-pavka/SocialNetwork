@@ -48,9 +48,12 @@
     .buttonFollow {
       min-width: 80px;
     }
-    & button {
+    & button, a {
       padding: 5px;
       margin: 5px;
+    }
+    & a {
+      padding: 6px;
     }
   }
 }

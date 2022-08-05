@@ -1,12 +1,16 @@
-.profileMain {
+.profileMain,
+.infoBlock,
+.mainItem {
   display: flex;
+}
+
+.profileMain {
   flex-direction: column;
   min-height: 500px;
   color: var(--color-heading-1);
   word-wrap: break-word;
   padding: 10px;
   .mainItem {
-    display: flex;
     justify-content: space-around;
   }
   .editBlock {
@@ -16,11 +20,16 @@
     }
   }
   .infoBlock {
-    display: flex;
     flex-direction: column;
     width: 100%;
     .infoBlockItem {
       text-align: center;
+    }
+    .friendUserActions {
+      margin: 0 auto;
+      & button {
+        min-width: 119px;
+      }
     }
   }
 }

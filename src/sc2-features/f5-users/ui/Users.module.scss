@@ -1,6 +1,5 @@
 .usersBlock,
 .usersMain,
-.totalUsers,
 .usersPagination {
   display: flex;
 }
@@ -15,9 +14,6 @@
   .usersPagination {
     justify-content: space-around;
     align-items: center;
-  }
-  .totalUsers {
-    margin: 0 auto;
   }
 }
 

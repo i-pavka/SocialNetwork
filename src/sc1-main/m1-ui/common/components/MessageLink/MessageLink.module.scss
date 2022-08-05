@@ -1,0 +1,15 @@
+.link {
+  color: var(--color-heading-1);
+  font-size: 14px;
+  letter-spacing: 1px;
+  line-height: 19px;
+  border: 1px solid #00684A;
+  border-radius: 4px;
+  margin: 5px 10px;
+  padding: 11px 11px;
+  background-color: var(--color-bg-4);
+  transition: all .3s;
+  &:hover {
+    border-radius: 19px;
+  }
+}

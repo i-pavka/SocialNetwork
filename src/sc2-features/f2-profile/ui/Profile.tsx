@@ -10,6 +10,7 @@ import {Button} from "../../../sc1-main/m1-ui/common/components/Button/Button";
 import {EditProfileData} from "./EditProfileData/EditProfileData";
 import {InfoHeader} from "../../../sc1-main/m1-ui/common/components/InfoHeader/InfoHeader";
 import {FollowUnfollow} from "../../../sc1-main/m1-ui/common/components/FollowUnfollow/FollowUnfollow";
+import {MessageLink} from "../../../sc1-main/m1-ui/common/components/MessageLink/MessageLink";
 
 export const Profile = () => {
 
@@ -56,10 +57,13 @@ export const Profile = () => {
             <h4>{lookingForAJobDescription}</h4>
           </div>
           <ProfileContacts/>
-          <div>
-            {((urlUserID !== String(userID)) && isAuth)
-              && <FollowUnfollow userId={Number(urlUserID)} followed={isFollow}/>}
-          </div>
+          {((urlUserID !== String(userID)) && isAuth)
+            && <div className={s.friendUserActions}>
+              <FollowUnfollow userId={Number(urlUserID)}
+                              followed={isFollow}/>
+              <MessageLink title={'Write Message'}/>
+            </div>
+          }
         </div>
       </div>
       {urlUserID === String(userID)

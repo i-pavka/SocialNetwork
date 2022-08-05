@@ -10,6 +10,7 @@ import {scrollTop} from "../../../sc3-utils/utilityFunctions";
 import {User} from "./User/User";
 import {SearchUsers} from "./SearchUsers/SearchUsers";
 import {useLocation, useSearchParams} from "react-router-dom";
+import {InfoHeader} from "../../../sc1-main/m1-ui/common/components/InfoHeader/InfoHeader";
 
 
 export const Users = () => {
@@ -71,7 +72,7 @@ export const Users = () => {
                      value={pageSize}
                      onChangeOption={changeQuantityOfUsersHandler}/>
       </div>
-      <div className={s.totalUsers}>Total users: {totalCount}</div>
+      <InfoHeader title={`Total users: ${totalCount}`}/>
     </section>
   );
 };

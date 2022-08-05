@@ -2,9 +2,9 @@ import React from 'react';
 import s from './Friend.module.scss'
 import {NavLink} from "react-router-dom";
 import defaultAva from "../../../../assets/img/small_ava.jpg";
-import {Button} from "../../../../sc1-main/m1-ui/common/components/Button/Button";
 import {UsersItemType} from "../../../f5-users/bll/usersReducer";
 import {FollowUnfollow} from "../../../../sc1-main/m1-ui/common/components/FollowUnfollow/FollowUnfollow";
+import {MessageLink} from "../../../../sc1-main/m1-ui/common/components/MessageLink/MessageLink";
 
 
 type FriendPropsType = {
@@ -27,8 +27,10 @@ export const Friend: React.FC<FriendPropsType> = ({users}) => {
             <p>{friend.name}</p>
             <p>{friend.status}</p>
             <div className={s.buttonBlock}>
-              <FollowUnfollow userId={friend.id} followed={friend.followed} customStyle={s.buttonFollow}/>
-              <Button>Message</Button>
+              <FollowUnfollow userId={friend.id}
+                              followed={friend.followed}
+                              customStyle={s.buttonFollow}/>
+              <MessageLink title={'Message'}/>
             </div>
           </div>
         </div>
